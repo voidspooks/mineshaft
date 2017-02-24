@@ -23,19 +23,18 @@ module RubyVenv
     fin += 1
     tar = url[fin..url.length]
 
-    return {
-      site: site
-      tar: tar
-    }
+    yield site
+    yield tar
   end
 
   def download(url)
-    find_slash_indices(url)
-
-    beg = url[1] + 1
-    fin = url[2] - 1
-    url = url[beg..fin]
-
-    Net::HTTP.start
+    split.url(url) do |site, file|
+      Net::HTTP.start(site) do |http|
+        response = http.get(file)
+        open("ruby.tar", "w") do |f|
+          f.write(response.body)
+        end
+      end
+    end
   end
 end

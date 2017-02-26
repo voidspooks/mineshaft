@@ -38,5 +38,9 @@ module RubyVenv
         end
       end
     end
+
+    def build
+      %x(./configure; make; sudo make install)
+    end
   end
 end

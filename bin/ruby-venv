@@ -1,0 +1,23 @@
+#!/usr/bin/ruby
+
+require "environment"
+require "install"
+require "optparse"
+
+options = {}
+
+OptionParser.new do |parser|
+  parser.on("-v", "--version VERSION", "The version of ruby to install.") do |v|
+    options[:name] = v
+  end
+end
+
+puts "Hello #{ options[:name] }"  if options[:name]
+puts ARGV[0]
+
+# environment = RubyVenv::Environment.new(ARGV[0])
+# environment.create
+
+# ruby = RubyVenv::Install.new
+# ruby.download(ARGV[1])
+# ruby.build

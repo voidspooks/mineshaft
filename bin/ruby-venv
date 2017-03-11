@@ -3,17 +3,23 @@
 require "environment"
 require "install"
 require "optparse"
+require "version"
 
 options = {}
 
-OptionParser.new do |parser|
-  parser.on("-v", "--version VERSION", "The version of ruby to install.") do |v|
-    options[:name] = v
+parser = OptionParser.new do |opts|
+  opts.on_tail("-v", "displays the current version of ruby-venv") do 
+    puts RubyVenv::VERSION[:name] + " " + RubyVenv::VERSION[:number]
+    exit
   end
 end
 
-puts "Hello #{ options[:name] }"  if options[:name]
-puts ARGV[0]
+parser.parse!
+
+#puts RubyVenv::VERSION if options[:version]
+
+#puts "Hello #{ options[:name] }"  if options[:name]
+#puts ARGV[0]
 
 # environment = RubyVenv::Environment.new(ARGV[0])
 # environment.create

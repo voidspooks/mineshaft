@@ -7,11 +7,7 @@ module RubyVenv
     end
 
     def create
-      %x{
-        mkdir #@name \
-        #@name/bin   \
-        #@name/lib   \
-      }
+      %x{ mkdir #@name }
     end
   end
 end

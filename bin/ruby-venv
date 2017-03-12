@@ -8,7 +8,9 @@ require "version"
 options = {}
 
 parser = OptionParser.new do |opts|
-  opts.on_tail("-v", "displays the current version of ruby-venv") do 
+  opts.banner = "usage: ruby-venv [options] environment"
+
+  opts.on("-v", "--version", "displays the current version of ruby-venv") do
     puts RubyVenv::VERSION[:name] + " " + RubyVenv::VERSION[:number]
     exit
   end
@@ -16,14 +18,9 @@ end
 
 parser.parse!
 
-#puts RubyVenv::VERSION if options[:version]
-
-#puts "Hello #{ options[:name] }"  if options[:name]
-#puts ARGV[0]
-
-# environment = RubyVenv::Environment.new(ARGV[0])
-# environment.create
+environment = RubyVenv::Environment.new(ARGV.last)
+environment.create
 
 # ruby = RubyVenv::Install.new
-# ruby.download(ARGV[1])
+# ruby.download(ARGV[0])
 # ruby.build

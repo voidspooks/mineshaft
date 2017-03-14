@@ -16,4 +16,5 @@ task :install do
 end
 
 task :default => :spec
+task :test    => :spec
 task :reload  => [ :build, :install ]

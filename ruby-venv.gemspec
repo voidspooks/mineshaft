@@ -1,4 +1,4 @@
-require_relative "lib/version"
+require_relative "lib/ruby-venv/version"
 
 Gem::Specification.new do |spec|
   spec.name                        = "ruby-venv"
@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.summary                     = "ruby virtual environment manager"
   spec.authors                     = [ "Cameron Testerman" ]
   spec.email                       = "cameronbtesterman@gmail.com"
-  spec.files                       = [ "lib/version.rb", "lib/install.rb", "lib/environment.rb" ]
+  spec.files                       = Dir["lib/ruby-venv/*.rb"] + Dir["lib/*.rb"]
   spec.homepage                    = "https://rubygems.org/gems/ruby-venv"
   spec.license                     = "MIT"
 

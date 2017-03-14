@@ -1,9 +1,7 @@
 #!/usr/bin/ruby
 
-require "environment"
-require "install"
+require "ruby-venv"
 require "optparse"
-require "version"
 
 options = {}
 
@@ -18,8 +16,10 @@ end
 
 parser.parse!
 
-environment = RubyVenv::Environment.new(ARGV.last)
-environment.create
+unless ARGV.last.nil?
+  environment = RubyVenv::Environment.new(ARGV.last)
+  environment.create
+end
 
 # ruby = RubyVenv::Install.new
 # ruby.download(ARGV[0])

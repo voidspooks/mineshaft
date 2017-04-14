@@ -1,4 +1,12 @@
 #!/usr/bin/ruby
+#
+# ruby-venv
+#
+# author:: Cameron Testerman
+# email:: cameronbtesterman@gmail.com
+# created:: 2017-04-14 1:19PM
+#
+# Copyright (c) 2017 Cameron Testerman
 
 require "ruby-venv"
 require "optparse"
@@ -13,8 +21,10 @@ parser = OptionParser.new do |opts|
     exit
   end
 
-  opts.on("-r", "--ruby-version VERSION",
-          "specify the version of Ruby to install") do |version|
+  opts.on("-r",
+          "--ruby-version VERSION",
+          "specify the version of Ruby to install"
+         ) do |version|
     options[:version] = version
   end
 end

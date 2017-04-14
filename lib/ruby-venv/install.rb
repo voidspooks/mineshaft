@@ -11,6 +11,10 @@ require 'net/http'
 
 module RubyVenv
   class Install
+    def get_latest_stable_ruby
+      "2.3.0"
+    end
+
     def find_slash_indices(url)
       slash_array = []
       url = url.split("")

@@ -9,10 +9,16 @@ gem install ruby-venv
 
 ## Usage
 
-Create a new environment
+Create a new environment and install the latest stable version of Ruby.
 
 ```bash
 ruby-venv <name_of_environment>
+```
+
+Create a new environment and specify the version of Ruby.
+
+```bash
+ruby-venv -r <ruby_version> <name_of_environment>
 ```
 
 ## Authors
@@ -20,4 +26,5 @@ ruby-venv <name_of_environment>
 Cameron Testerman   --  cameronbtesterman@gmail.com
 
 Copyright 2017, Cameron Testerman
+
 Released under MIT license.  

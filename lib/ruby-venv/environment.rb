@@ -1,3 +1,5 @@
+require 'fileutils'
+
 module RubyVenv
   class Environment
     attr_reader :name
@@ -7,7 +9,7 @@ module RubyVenv
     end
 
     def create
-      %x{ mkdir #@name }
+      FileUtils::mkdir_p(@name)
     end
   end
 end

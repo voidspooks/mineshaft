@@ -12,6 +12,11 @@ parser = OptionParser.new do |opts|
     puts RubyVenv::VERSION[:name] + " " + RubyVenv::VERSION[:number]
     exit
   end
+
+  opts.on("-r", "--ruby-version VERSION",
+          "specify the version of Ruby to install") do |version|
+    options[:version] = version
+  end
 end
 
 parser.parse!
@@ -20,7 +25,3 @@ unless ARGV.last.nil?
   environment = RubyVenv::Environment.new(ARGV.last)
   environment.create
 end
-
-# ruby = RubyVenv::Install.new
-# ruby.download(ARGV[0])
-# ruby.build

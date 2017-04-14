@@ -1,6 +1,6 @@
 module RubyVenv
   VERSION = {
     name: "ruby-venv",
-    number:  "0.1.0"
+    number:  "0.0.1"
   }
 end

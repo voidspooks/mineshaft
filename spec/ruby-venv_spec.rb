@@ -1,7 +1,10 @@
 require 'spec_helper'
 
 describe RubyVenv do
-  it "does something" do
-    pending "blah"
+  it 'create env dir' do
+    env = RubyVenv::Environment.new("test")
+    env.create
+    expect(File.exist?("test")).to eq true
+    Dir.delete("test")
   end
 end

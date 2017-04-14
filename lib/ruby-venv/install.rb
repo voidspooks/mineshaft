@@ -11,7 +11,7 @@ require 'net/http'
 
 module RubyVenv
   class Install
-    def get_latest_stable_ruby
+    def get_latest_stable
       "2.3.0"
     end
 

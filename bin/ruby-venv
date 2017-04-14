@@ -35,8 +35,6 @@ unless ARGV.last.nil?
   environment = RubyVenv::Environment.new(ARGV.last)
   environment.create
 
-  ruby_install = RubyVenv::Install.new
-  puts ruby_install.get_latest_stable_ruby
-
-  # ruby_install = RubyVenv::Install.new()
+  ruby = RubyVenv::Install.new
+  version = options[:version].nil? ? ruby.get_latest_stable : options[:version]
 end

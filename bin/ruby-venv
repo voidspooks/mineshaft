@@ -35,6 +35,13 @@ unless ARGV.last.nil?
   environment = RubyVenv::Environment.new(ARGV.last)
   environment.create
 
-  ruby = RubyVenv::Install.new
-  version = options[:version].nil? ? ruby.get_latest_stable : options[:version]
+  versions = JSON.parse(File.read('versions/versions.json'))
+
+  versions.each do |number, url|
+    @url = url if number == options[:version]
+  end
+
+  ruby_install = RubyVenv::Install.new
+  ruby_install.download(@url, environment.dir)
+  ruby_install.build(environment.dir)
 end

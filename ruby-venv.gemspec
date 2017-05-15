@@ -7,7 +7,9 @@ Gem::Specification.new do |spec|
   spec.summary                     = "ruby virtual environment manager"
   spec.authors                     = [ "Cameron Testerman" ]
   spec.email                       = "cameronbtesterman@gmail.com"
-  spec.files                       = Dir["lib/ruby-venv/*.rb"] + Dir["lib/*.rb"]
+  spec.files                       = Dir["lib/ruby-venv/*.rb"] +
+                                     Dir["lib/*.rb"] +
+                                     Dir["versions/versions.json"]
   spec.homepage                    = "https://rubygems.org/gems/ruby-venv"
   spec.license                     = "MIT"
 
@@ -15,4 +17,5 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency  "rspec"
   spec.add_development_dependency  "json"
+  spec.add_development_dependency  "optparse"
 end

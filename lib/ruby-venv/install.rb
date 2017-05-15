@@ -40,19 +40,22 @@ module RubyVenv
       yield site, tar
     end
 
-    def download(url)
+    def download(url, download_dir)
       split_url(url) do |site, file|
         Net::HTTP.start(site) do |http|
           response = http.get(file)
-          open("ruby.tar", "w") do |f|
+          open("#{download_dir}/ruby.tar.bz2", "w") do |f|
             f.write(response.body)
           end
         end
       end
     end
 
-    def build
-      %x(./configure; make; sudo make install)
+    def unzip
+    end
+
+    def build(prefix)
+      %x(./configure --prefix #{prefix}; make; sudo make install)
     end
   end
 end

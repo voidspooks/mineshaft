@@ -10,14 +10,14 @@ require 'fileutils'
 
 module RubyVenv
   class Environment
-    attr_reader :name
+    attr_reader :dir
 
-    def initialize(name)
-      @name = name
+    def initialize(dir)
+      @dir= dir
     end
 
     def create
-      FileUtils::mkdir_p(@name)
+      FileUtils::mkdir_p(@dir)
     end
   end
 end

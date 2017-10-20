@@ -1,4 +1,4 @@
-# ruby-venv
+# mineshaft
 #
 # author:: Cameron Testerman
 # email:: cameronbtesterman@gmail.com
@@ -9,7 +9,7 @@
 require 'json'
 require 'net/http'
 
-module RubyVenv
+module Mineshaft
   class Install
     def get_latest_stable
       "2.3.0"

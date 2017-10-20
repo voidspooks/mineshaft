@@ -1,4 +1,4 @@
-# ruby-venv
+# mineshaft
 #
 # author:: Cameron Testerman
 # email:: cameronbtesterman@gmail.com
@@ -6,9 +6,9 @@
 #
 # Copyright (c) 2017 Cameron Testerman
 
-module RubyVenv
+module Mineshaft
   VERSION = {
     name: "ruby-venv",
-    number:  "0.0.1"
+    number:  "0.1.0"
   }
 end

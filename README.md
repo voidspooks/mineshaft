@@ -1,7 +1,9 @@
-# ruby-venv
-Inspired by Pypa's Virtualenv, ruby-venv allows for the creation of isolated Ruby virtual environments.
+# minecart
+Inspired by Pypa's Virtualenv, minecart allows for the creation of isolated Ruby virtual environments. It aims to simplify the process of installing and using multiple versions of Ruby.
 
 ## Installation
+
+minecart is a Ruby gem, so you will need a working Ruby environment to use it. 
 
 ```bash
 gem install ruby-venv
@@ -12,13 +14,13 @@ gem install ruby-venv
 Create a new environment and install the latest stable version of Ruby.
 
 ```bash
-ruby-venv <name_of_environment>
+minecart new <name_of_environment>
 ```
 
 Create a new environment and specify the version of Ruby.
 
 ```bash
-ruby-venv -r <ruby_version> <name_of_environment>
+minecart new <name_of_environment> -v <ruby_version>
 ```
 
 ## Authors

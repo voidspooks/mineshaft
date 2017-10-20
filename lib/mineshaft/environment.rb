@@ -1,4 +1,4 @@
-# ruby-venv
+# mineshaft
 #
 # author:: Cameron Testerman
 # email:: cameronbtesterman@gmail.com
@@ -8,7 +8,7 @@
 
 require 'fileutils'
 
-module RubyVenv
+module Mineshaft
   class Environment
     attr_reader :dir
 

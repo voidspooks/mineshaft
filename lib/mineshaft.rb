@@ -1,4 +1,4 @@
-# ruby-venv
+# mineshaft
 #
 # author:: Cameron Testerman
 # email:: cameronbtesterman@gmail.com
@@ -6,6 +6,6 @@
 #
 # Copyright (c) 2017 Cameron Testerman
 
-require_relative "./ruby-venv/environment"
-require_relative "./ruby-venv/install"
-require_relative "./ruby-venv/version"
+require_relative "./mineshaft/environment"
+require_relative "./mineshaft/install"
+require_relative "./mineshaft/version"

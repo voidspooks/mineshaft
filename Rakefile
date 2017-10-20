@@ -6,13 +6,13 @@ RSpec::Core::RakeTask.new(:spec) do |task|
 end
 
 task :build do
-  %x{ rm ruby-venv-*.gem }
-  %x{ gem build ruby-venv.gemspec }
+  %x{ rm mineshaft-*.gem }
+  %x{ gem build mineshaft.gemspec }
 end
 
 task :install do
-  %x{ yes | gem uninstall ruby-venv }
-  %x{ gem install ./ruby-venv-*.gem }
+  %x{ yes | gem uninstall mineshaft }
+  %x{ gem install ./mineshaft-*.gem }
 end
 
 task :default => :spec

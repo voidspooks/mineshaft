@@ -1,6 +1,6 @@
 #!/usr/bin/ruby
 #
-# ruby-venv
+# minecart
 #
 # author:: Cameron Testerman
 # email:: cameronbtesterman@gmail.com
@@ -8,20 +8,20 @@
 #
 # Copyright (c) 2017 Cameron Testerman
 
-require "ruby-venv"
+require "minecart"
 require "optparse"
 
 options = {}
 
 parser = OptionParser.new do |opts|
-  opts.banner = "usage: ruby-venv [options] environment"
+  opts.banner = "usage: minecart [options] environment"
 
-  opts.on("-v", "--version", "displays the current version of ruby-venv") do
-    puts RubyVenv::VERSION[:name] + " " + RubyVenv::VERSION[:number]
+  opts.on("v", "--version", "displays the current version of minecart") do
+    puts Mineshaft::VERSION[:name] + " " + Mineshaft::VERSION[:number]
     exit
   end
 
-  opts.on("-r",
+  opts.on("-V",
           "--ruby-version VERSION",
           "specify the version of Ruby to install"
          ) do |version|
@@ -32,7 +32,7 @@ end
 parser.parse!
 
 unless ARGV.last.nil?
-  environment = RubyVenv::Environment.new(ARGV.last)
+  environment = Mineshaft::Environment.new(ARGV.last)
   environment.create
 
   versions = JSON.parse(File.read('versions/versions.json'))
@@ -40,8 +40,8 @@ unless ARGV.last.nil?
   versions.each do |number, url|
     @url = url if number == options[:version]
   end
-
-  ruby_install = RubyVenv::Install.new
+  
+  ruby_install = Mineshaft::Install.new
   ruby_install.download(@url, environment.dir)
   ruby_install.build(environment.dir)
 end

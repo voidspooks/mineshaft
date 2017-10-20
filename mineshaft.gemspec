@@ -1,16 +1,16 @@
-require_relative "lib/ruby-venv/version"
+require_relative "lib/mineshaft/version"
 
 Gem::Specification.new do |spec|
-  spec.name                        = "ruby-venv"
-  spec.version                     = RubyVenv::VERSION[:number]
-  spec.date                        = "2017-02-25"
-  spec.summary                     = "ruby virtual environment manager"
+  spec.name                        = "mineshaft"
+  spec.version                     = Mineshaft::VERSION[:number]
+  spec.date                        = "2017-10-20"
+  spec.summary                     = "Ruby virtual environment manager"
   spec.authors                     = [ "Cameron Testerman" ]
   spec.email                       = "cameronbtesterman@gmail.com"
-  spec.files                       = Dir["lib/ruby-venv/*.rb"] +
+  spec.files                       = Dir["lib/mineshaft/*.rb"] +
                                      Dir["lib/*.rb"] +
                                      Dir["versions/versions.json"]
-  spec.homepage                    = "https://rubygems.org/gems/ruby-venv"
+  spec.homepage                    = "https://github.com/camerontesterman/mineshaft"
   spec.license                     = "MIT"
 
   spec.executables                 << "ruby-venv"

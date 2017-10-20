@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
   spec.homepage                    = "https://github.com/camerontesterman/mineshaft"
   spec.license                     = "MIT"
 
-  spec.executables                 << "ruby-venv"
+  spec.executables                 << "mineshaft"
 
   spec.add_development_dependency  "rspec"
   spec.add_development_dependency  "json"

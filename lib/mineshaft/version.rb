@@ -8,7 +8,7 @@
 
 module Mineshaft
   VERSION = {
-    name: "ruby-venv",
+    name: "mineshaft",
     number:  "0.1.0"
   }
 end

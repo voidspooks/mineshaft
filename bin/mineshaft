@@ -28,22 +28,21 @@ parser = OptionParser.new do |opts|
          ) do |version|
     options[:version] = version
   end
-
-  #opts.on("new", "--new", "creates a new Ruby environment") do |env|
-  #  options[:env] = env
-  #  environment = Mineshaft::Environment.new(env).create 
-  #end	  
 end
 
 parser.parse!
 
 if ARGV.include?("new")
   dir_name = ARGV[ARGV.index("new") + 1]
-  p dir_name  
   Mineshaft::Environment.new(dir_name).create
+
   versions = YAML.load_file(File.join(File.dirname(File.expand_path(__FILE__)), '../versions/versions.yaml'))
-  version = options[:version] ? options[:version] : Mineshaft::Install.get_latest_stable
-  Mineshaft::Install.new
-                    .download(versions[version], dir_name)
-                    .build(dir_name)
+  version = options[:version] ? options[:version] : Mineshaft::Installer.get_latest_stable
+
+  installer = Mineshaft::Installer.new do |config|
+    config.url = versions[version]
+    config.directory = dir_name
+  end
+
+  installer.run
 end

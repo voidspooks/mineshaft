@@ -9,7 +9,13 @@
 require 'net/http'
 
 module Mineshaft
-  class Install
+  class Installer
+    attr_accessor :url, :directory
+
+    def initialize
+      yield self
+    end
+
     def self.get_latest_stable
       "2.3.0"
     end
@@ -48,6 +54,11 @@ module Mineshaft
           end
         end
       end
+    end
+
+    def run
+      self.download(@url, @directory)
+      self.build(@directory)
     end
 
     def unzip

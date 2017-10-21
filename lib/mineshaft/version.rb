@@ -9,6 +9,6 @@
 module Mineshaft
   VERSION = {
     name: "mineshaft",
-    number:  "0.1.0"
+    number:  "0.2.0"
   }
 end

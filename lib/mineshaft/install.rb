@@ -6,12 +6,11 @@
 #
 # Copyright (c) 2017 Cameron Testerman
 
-require 'json'
 require 'net/http'
 
 module Mineshaft
   class Install
-    def get_latest_stable
+    def self.get_latest_stable
       "2.3.0"
     end
 

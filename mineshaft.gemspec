@@ -9,13 +9,11 @@ Gem::Specification.new do |spec|
   spec.email                       = "cameronbtesterman@gmail.com"
   spec.files                       = Dir["lib/mineshaft/*.rb"] +
                                      Dir["lib/*.rb"] +
-                                     Dir["versions/versions.json"]
+                                     Dir["versions/versions.yaml"]
   spec.homepage                    = "https://github.com/camerontesterman/mineshaft"
   spec.license                     = "MIT"
 
   spec.executables                 << "mineshaft"
 
-  spec.add_development_dependency  "rspec"
-  spec.add_development_dependency  "json"
-  spec.add_development_dependency  "optparse"
+  #spec.add_runtime_dependency  "rspec", ["= 3.7.0"]
 end

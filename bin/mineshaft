@@ -10,38 +10,40 @@
 
 require "mineshaft"
 require "optparse"
+require "yaml"
 
 options = {}
 
 parser = OptionParser.new do |opts|
   opts.banner = "usage: minecart [options] environment"
 
-  opts.on("v", "--version", "displays the current version of minecart") do
-    puts Mineshaft::VERSION[:name] + " " + Mineshaft::VERSION[:number]
+  opts.on("-v", "--version", "displays the current version of minecart") do
+    puts "#{Mineshaft::VERSION[:name]} v#{Mineshaft::VERSION[:number]}"
     exit
   end
 
-  opts.on("-V",
+  opts.on("-r",
           "--ruby-version VERSION",
           "specify the version of Ruby to install"
          ) do |version|
     options[:version] = version
   end
+
+  #opts.on("new", "--new", "creates a new Ruby environment") do |env|
+  #  options[:env] = env
+  #  environment = Mineshaft::Environment.new(env).create 
+  #end	  
 end
 
 parser.parse!
 
-unless ARGV.last.nil?
-  environment = Mineshaft::Environment.new(ARGV.last)
-  environment.create
-
-  versions = JSON.parse(File.read('versions/versions.json'))
-
-  versions.each do |number, url|
-    @url = url if number == options[:version]
-  end
-  
-  ruby_install = Mineshaft::Install.new
-  ruby_install.download(@url, environment.dir)
-  ruby_install.build(environment.dir)
+if ARGV.include?("new")
+  dir_name = ARGV[ARGV.index("new") + 1]
+  p dir_name  
+  Mineshaft::Environment.new(dir_name).create
+  versions = YAML.load_file(File.join(File.dirname(File.expand_path(__FILE__)), '../versions/versions.yaml'))
+  version = options[:version] ? options[:version] : Mineshaft::Install.get_latest_stable
+  Mineshaft::Install.new
+                    .download(versions[version], dir_name)
+                    .build(dir_name)
 end

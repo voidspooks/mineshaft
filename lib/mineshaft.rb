@@ -7,5 +7,5 @@
 # Copyright (c) 2017 Cameron Testerman
 
 require "mineshaft/environment"
-require "mineshaft/install"
+require "mineshaft/installer"
 require "mineshaft/version"

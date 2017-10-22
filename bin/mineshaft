@@ -42,6 +42,7 @@ if ARGV.include?("new")
   installer = Mineshaft::Installer.new do |config|
     config.url = versions[version]
     config.directory = dir_name
+    config.version = version
   end
 
   installer.run

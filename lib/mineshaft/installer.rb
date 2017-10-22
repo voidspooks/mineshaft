@@ -6,18 +6,22 @@
 #
 # Copyright (c) 2017 Cameron Testerman
 
+require 'fileutils'
 require 'net/http'
+require 'rubygems/package'
+require 'zlib'
 
 module Mineshaft
   class Installer
-    attr_accessor :url, :directory
+    attr_accessor :url, :directory, :version
 
     def initialize
+      @ruby_archive = "ruby.tar.gz"
       yield self
     end
 
     def self.get_latest_stable
-      "2.3.0"
+      "2.4.2"
     end
 
     def find_slash_indices(url)
@@ -46,26 +50,40 @@ module Mineshaft
     end
 
     def download(url, download_dir)
+      puts "Downloading #{url}"
       split_url(url) do |site, file|
         Net::HTTP.start(site) do |http|
           response = http.get(file)
-          open("#{download_dir}/ruby.tar.bz2", "w") do |f|
+          open("#{download_dir}/#@ruby_archive", "w") do |f|
             f.write(response.body)
           end
         end
       end
     end
 
-    def run
-      self.download(@url, @directory)
-      self.build(@directory)
+    def unzip(dir)
+      FileUtils::mkdir_p("#{dir}/ruby-#@version")
+      tar_extract = Gem::Package::TarReader.new(Zlib::GzipReader.open("#{dir}/#@ruby_archive"))
+      tar_extract.rewind
+      tar_extract.each do |entry|
+        puts entry.full_name
+        if entry.directory?
+          FileUtils::mkdir_p("#{dir}/#{entry.full_name}")
+        elsif entry.file?
+          File.open("#{dir}/#{entry.full_name}", 'w') {|file| file.write(entry)}
+        end
+      end
+      tar_extract.close
     end
 
-    def unzip
+    def run
+      download(@url, @directory)
+      unzip(@directory)
+      build(@directory)
     end
 
     def build(prefix)
-      %x(./configure --prefix #{prefix}; make; sudo make install)
+      %x(sudo #{prefix}/ruby-#@version/configure --prefix #{prefix} && make && sudo make install)
     end
   end
 end

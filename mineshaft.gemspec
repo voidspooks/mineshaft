@@ -15,5 +15,5 @@ Gem::Specification.new do |spec|
 
   spec.executables                 << "mineshaft"
 
-  #spec.add_runtime_dependency  "rspec", ["= 3.7.0"]
+  spec.add_runtime_dependency "rbzip2", ["= 0.3.0"]
 end

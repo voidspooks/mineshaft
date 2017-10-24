@@ -88,7 +88,7 @@ module Mineshaft
     def build(prefix)
       dir = "#{Dir.pwd}/#{prefix}/ruby-#@version"
       commands = [
-        "sudo chmod +x configure",
+        "sudo chmod +x configure tool/ifchange",
         "sudo ./configure --prefix #{Dir.pwd}/#{prefix}",
         "sudo make",
         "sudo make install"

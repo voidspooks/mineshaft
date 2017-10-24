@@ -34,16 +34,5 @@ parser.parse!
 
 if ARGV.include?("new")
   dir_name = ARGV[ARGV.index("new") + 1]
-  Mineshaft::Environment.new(dir_name).create
-
-  versions = YAML.load_file(File.join(File.dirname(File.expand_path(__FILE__)), '../versions/versions.yaml'))
-  version = options[:version] ? options[:version] : Mineshaft::Installer.get_latest_stable
-
-  installer = Mineshaft::Installer.new do |config|
-    config.url = versions[version]
-    config.directory = dir_name
-    config.version = version
-  end
-
-  installer.run
+  Mineshaft::Environment.new(dir_name, options).create
 end

@@ -1,9 +1,9 @@
 # Mineshaft
-Inspired by Pypa's Virtualenv, Mineshaft allows for the creation of isolated Ruby virtual environments. It aims to simplify the process of installing and using multiple versions of Ruby.
+Inspired by PyPA's Virtualenv, Mineshaft allows for the creation of isolated Ruby virtual environments. It aims to simplify the process of installing and using multiple versions of Ruby.
 
 ## Installation
 
-Mineshaft is a Ruby gem, so you will need a working Ruby environment to use it. 
+Mineshaft is a Ruby gem, so you will need a working Ruby environment to use it.
 
 ```bash
 gem install mineshaft

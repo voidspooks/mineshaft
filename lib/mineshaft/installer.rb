@@ -10,10 +10,13 @@ require 'fileutils'
 require 'net/http'
 require 'rubygems/package'
 require 'zlib'
+require 'mineshaft/shell'
 
 module Mineshaft
   class Installer
     attr_accessor :url, :directory, :version
+
+    include Mineshaft::Shell
 
     def initialize
       @ruby_archive = "ruby.tar.gz"
@@ -70,7 +73,7 @@ module Mineshaft
         if entry.directory?
           FileUtils::mkdir_p("#{dir}/#{entry.full_name}")
         elsif entry.file?
-          File.open("#{dir}/#{entry.full_name}", 'w') {|file| file.write(entry)}
+          File.open("#{dir}/#{entry.full_name}", 'w') {|file| file.write(entry.read)}
         end
       end
       tar_extract.close
@@ -83,7 +86,14 @@ module Mineshaft
     end
 
     def build(prefix)
-      %x(sudo #{prefix}/ruby-#@version/configure --prefix #{prefix} && make && sudo make install)
+      dir = "#{Dir.pwd}/#{prefix}/ruby-#@version"
+      commands = [
+        "sudo chmod +x configure",
+        "sudo ./configure --prefix #{Dir.pwd}/#{prefix}",
+        "sudo make",
+        "sudo make install"
+      ]
+      commands.each { |command| shell(dir, command) }
     end
   end
 end

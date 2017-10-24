@@ -14,6 +14,4 @@ Gem::Specification.new do |spec|
   spec.license                     = "MIT"
 
   spec.executables                 << "mineshaft"
-
-  spec.add_runtime_dependency "rbzip2", ["= 0.3.0"]
 end

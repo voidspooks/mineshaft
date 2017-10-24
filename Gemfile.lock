@@ -2,12 +2,10 @@ PATH
   remote: .
   specs:
     mineshaft (0.2.0)
-      rbzip2 (= 0.3.0)
 
 GEM
   remote: https://rubygems.org/
   specs:
-    rbzip2 (0.3.0)
 
 PLATFORMS
   ruby

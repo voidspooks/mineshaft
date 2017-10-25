@@ -20,7 +20,7 @@ mineshaft new <name_of_environment>
 Create a new environment and specify the version of Ruby with `-r` and the OpenSSL install with `-o`.
 
 ```bash
-mineshaft new <name_of_environment> -r <ruby_version> -o <openssl_directory>
+mineshaft new .env -r 2.4.2 -o /usr/local/opt/openssl
 ```
 
 ## Authors

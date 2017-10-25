@@ -15,7 +15,12 @@ require "yaml"
 options = {}
 
 parser = OptionParser.new do |opts|
-  opts.banner = "usage: minecart [options] environment"
+  opts.banner = "Usage: mineshaft [command] [options]"
+  opts.separator ""
+  opts.separator "Commands"
+  opts.separator "    new                              create new environment"
+  opts.separator ""
+  opts.separator "Options"
 
   opts.on("-v",
     "--version",
@@ -31,7 +36,7 @@ parser = OptionParser.new do |opts|
   end
 
   opts.on("-o",
-    "--with-openssl-dir OPENSSLDIR",
+    "--with-openssl-dir DIR",
     "specify the directory where OpenSSL is installed") do |openssl_dir|
       options[:openssl_dir] = openssl_dir
   end

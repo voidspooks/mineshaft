@@ -25,6 +25,7 @@ module Mineshaft
         config.url = versions[version]
         config.directory = @dir
         config.version = version
+        config.options = @options
       end
       installer.run
     end

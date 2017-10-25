@@ -17,16 +17,23 @@ options = {}
 parser = OptionParser.new do |opts|
   opts.banner = "usage: minecart [options] environment"
 
-  opts.on("-v", "--version", "displays the current version of minecart") do
-    puts "#{Mineshaft::VERSION[:name]} v#{Mineshaft::VERSION[:number]}"
-    exit
+  opts.on("-v",
+    "--version",
+    "displays the current version of minecart") do
+      puts "#{Mineshaft::VERSION[:name]} v#{Mineshaft::VERSION[:number]}"
+      exit
   end
 
   opts.on("-r",
-          "--ruby-version VERSION",
-          "specify the version of Ruby to install"
-         ) do |version|
-    options[:version] = version
+    "--ruby-version VERSION",
+    "specify the version of Ruby to install") do |version|
+      options[:version] = version
+  end
+
+  opts.on("-o",
+    "--with-openssl-dir OPENSSLDIR",
+    "specify the directory where OpenSSL is installed") do |openssl_dir|
+      options[:openssl_dir] = openssl_dir
   end
 end
 

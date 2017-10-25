@@ -14,7 +14,7 @@ require 'mineshaft/shell'
 
 module Mineshaft
   class Installer
-    attr_accessor :url, :directory, :version
+    attr_accessor :url, :directory, :version, :options
 
     include Mineshaft::Shell
 
@@ -85,11 +85,16 @@ module Mineshaft
       build(@directory)
     end
 
+    def configure_options(prefix)
+      config = "sudo ./configure --prefix #{Dir.pwd}/#{prefix}"
+      config << " --with-openssl-dir=#{@options[:openssl_dir]}"
+    end
+
     def build(prefix)
       dir = "#{Dir.pwd}/#{prefix}/ruby-#@version"
       commands = [
         "sudo chmod +x configure tool/ifchange",
-        "sudo ./configure --prefix #{Dir.pwd}/#{prefix}",
+        configure_options(prefix),
         "sudo make",
         "sudo make install"
       ]

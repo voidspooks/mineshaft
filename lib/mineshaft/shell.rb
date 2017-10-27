@@ -9,7 +9,7 @@
 module Mineshaft
   module Shell
     def shell(dir, cmd)
-      puts "Running #{cmd} in #{dir}"
+      puts "Running #{cmd}"
       %x{ cd #{dir} && #{cmd} }
     end
   end

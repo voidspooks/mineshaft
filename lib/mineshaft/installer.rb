@@ -27,6 +27,14 @@ module Mineshaft
       "2.4.2"
     end
 
+    def run
+      download @url, @directory
+      unzip          @directory
+      build          @directory
+    end
+
+    private
+
     def find_slash_indices(url)
       slash_array = []
       url = url.split("")
@@ -68,35 +76,31 @@ module Mineshaft
       FileUtils::mkdir_p("#{dir}/ruby-#@version")
       tar_extract = Gem::Package::TarReader.new(Zlib::GzipReader.open("#{dir}/#@ruby_archive"))
       tar_extract.rewind
+      puts "Unzipping archive"
       tar_extract.each do |entry|
-        puts entry.full_name
         if entry.directory?
           FileUtils::mkdir_p("#{dir}/#{entry.full_name}")
         elsif entry.file?
           File.open("#{dir}/#{entry.full_name}", 'w') {|file| file.write(entry.read)}
         end
       end
+      puts "Archive successfully unzipped"
       tar_extract.close
     end
 
-    def run
-      download(@url, @directory)
-      unzip(@directory)
-      build(@directory)
-    end
-
     def configure_options(prefix)
-      config = "sudo ./configure --prefix #{Dir.pwd}/#{prefix}"
+      config = "./configure --prefix #{Dir.pwd}/#{prefix}"
       config << " --with-openssl-dir=#{@options[:openssl_dir]}"
     end
 
     def build(prefix)
+      puts "Building environment in #{prefix}"
       dir = "#{Dir.pwd}/#{prefix}/ruby-#@version"
       commands = [
-        "sudo chmod +x configure tool/ifchange",
+        "chmod +x configure tool/ifchange",
         configure_options(prefix),
-        "sudo make",
-        "sudo make install"
+        "make",
+        "make install"
       ]
       commands.each { |command| shell(dir, command) }
     end

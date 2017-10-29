@@ -25,7 +25,7 @@ parser = OptionParser.new do |opts|
   opts.on("-v",
     "--version",
     "displays the current version of minecart") do
-      puts "#{Mineshaft::VERSION[:name]} v#{Mineshaft::VERSION[:number]}"
+      puts "Mineshaft v#{Mineshaft::VERSION}"
       exit
   end
 

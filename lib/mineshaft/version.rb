@@ -7,8 +7,5 @@
 # Copyright (c) 2017 Cameron Testerman
 
 module Mineshaft
-  VERSION = {
-    name: "mineshaft",
-    number:  "0.4.0"
-  }
+  VERSION = "0.5.0"
 end

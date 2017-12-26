@@ -1,5 +1,6 @@
 ---
-2.5.0-preview1: http://cache.ruby-lang.org/pub/ruby/2.5/ruby-2.5.0-preview1.tar.gz
+2.5.0: https://cache.ruby-lang.org/pub/ruby/2.5/ruby-2.5.0.tar.gz
+2.5.0-preview1: https://cache.ruby-lang.org/pub/ruby/2.5/ruby-2.5.0-preview1.tar.gz
 2.4.2: https://cache.ruby-lang.org/pub/ruby/2.4/ruby-2.4.2.tar.gz
 2.4.1: https://cache.ruby-lang.org/pub/ruby/2.4/ruby-2.4.1.tar.gz
 2.4.0: https://cache.ruby-lang.org/pub/ruby/2.4/ruby-2.4.0.tar.gz

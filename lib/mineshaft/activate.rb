@@ -9,26 +9,32 @@ require 'erb'
 
 module Mineshaft
   class ActivateTemplate
-    attr_reader :result
+    attr_reader :result, :ENVDIR
 
-    def initialize(template_file)
-      @template_file = template_file
-      read
+    def initialize(dir, template_file)
+      @dir = dir
+      @template_file = read(template_file)
+      $ENVDIR = dir
     end
 
-    def write_to_file(filepath)
-      render_template
-      File.open() # Write to the activate.sh file inside of the Ruby environment.
+    def create
+      script_path = File.join(@dir, "bin/activate.sh")
+      File.truncate(File.join(script_path, 0) if File.exist(script_path)
+      @template_file.each do |line|
+        File.open(File.join(script_path, "a") do |file|
+          file.write(render(line))
+        end
+      end
     end
 
     private
 
-    def render_template
-      @result = ERB.new(@template).result
+    def render(line)
+      ERB.new(line).result
     end
 
-    def read
-      @template = File.read(@template_file)
+    def read(file)
+      File.open(file).readlines
     end
   end
 end

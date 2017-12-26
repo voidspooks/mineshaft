@@ -3,7 +3,7 @@
 # activate.sh
 
 OLDPS1=$PS1
-ENV=<%= @ENVDIR %>
+ENV=<%= $ENVDIR %>
 PS1="($ENV)${OLDPS1}"
 
 deactivate() {

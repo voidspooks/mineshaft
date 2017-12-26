@@ -9,3 +9,4 @@
 require "mineshaft/environment"
 require "mineshaft/installer"
 require "mineshaft/version"
+require "mineshaft/activate"

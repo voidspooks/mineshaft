@@ -28,6 +28,9 @@ module Mineshaft
         config.options = @options
       end
       installer.run
+      template_file = File.open(File.join(File.dirname(File.expand_path(__FILE__)), '../../environment/activate.sh.erb'))
+      activate_script = Mineshaft::ActivateTemplate.new(@dir, template_file)
+      activate_script.create
     end
   end
 end

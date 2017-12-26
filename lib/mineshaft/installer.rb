@@ -24,7 +24,7 @@ module Mineshaft
     end
 
     def self.get_latest_stable
-      "2.4.2"
+      "2.5.0"
     end
 
     def run

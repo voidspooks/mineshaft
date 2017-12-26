@@ -3,13 +3,14 @@ require_relative "lib/mineshaft/version"
 Gem::Specification.new do |spec|
   spec.name                        = "mineshaft"
   spec.version                     = Mineshaft::VERSION
-  spec.date                        = "2017-10-29"
+  spec.date                        = "2017-12-25"
   spec.summary                     = "Ruby virtual environment manager"
   spec.authors                     = [ "Cameron Testerman" ]
   spec.email                       = "cameronbtesterman@gmail.com"
   spec.files                       = Dir["lib/mineshaft/*.rb"] +
                                      Dir["lib/*.rb"] +
-                                     Dir["versions/versions.yaml"]
+                                     Dir["versions/versions.yaml"] +
+                                     Dir["environment/activate.sh.erb"]
   spec.homepage                    = "https://github.com/camerontesterman/mineshaft"
   spec.license                     = "MIT"
 

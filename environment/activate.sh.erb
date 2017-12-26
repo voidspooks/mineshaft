@@ -6,6 +6,10 @@ OLDPS1=$PS1
 ENV=<%= $ENVDIR %>
 PS1="($ENV)${OLDPS1}"
 
+OLDPATH=$PATH
+PATH=<%= File.expand_path($ENVDIR, "/bin") %>:$OLDPATH
+
 deactivate() {
   PS1=$OLDPS1
+  PATH=$OLDPATH
 }

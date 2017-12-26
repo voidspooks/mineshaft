@@ -23,6 +23,12 @@ Create a new environment and specify the version of Ruby with `-r` and the OpenS
 mineshaft new .env -r 2.5.0 -o /usr/local/opt/openssl
 ```
 
+To use the new environment, you must activate it using the `activate.sh` script.
+
+```bash
+source .env/bin/activate.sh
+```
+
 ## Authors
 
 Cameron Testerman   --  cameronbtesterman@gmail.com

@@ -14,7 +14,6 @@ module Mineshaft
 
     def initialize(dir, options)
       if options[:global]
-        puts "GLOBAL!!!!!"
         @dir = File.join(Dir.home, ".mineshaft", dir)
       else
         @dir = dir

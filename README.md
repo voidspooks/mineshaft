@@ -29,6 +29,8 @@ To use the new environment, you must activate it using the `activate.sh` script.
 source .env/bin/activate.sh
 ```
 
+*Please note: The global option is still under development and should be considered experimental at this point in time. * 
+
 You can install a Ruby environment globally by running the following command.
 
 ```bash

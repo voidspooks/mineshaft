@@ -19,6 +19,7 @@ parser = OptionParser.new do |opts|
   opts.separator ""
   opts.separator "Commands"
   opts.separator "    new                              create new environment"
+  opts.separator "    global                           installs Ruby environment globally"
   opts.separator ""
   opts.separator "Options"
 
@@ -44,7 +45,10 @@ end
 
 parser.parse!
 
-if ARGV.include?("new")
+if ARGV[0] == "new"
   dir_name = ARGV[ARGV.index("new") + 1]
   Mineshaft::Environment.new(dir_name, options).create
+elsif ARGV[0] == "global"
+  options[:global] = true
+  Mineshaft::Environment.new(options[:version], options).create
 end

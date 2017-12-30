@@ -29,6 +29,14 @@ To use the new environment, you must activate it using the `activate.sh` script.
 source .env/bin/activate.sh
 ```
 
+You can install a Ruby environment globally by running the following command.
+
+```bash
+mineshaft global -r 2.5.0 -o /usr/local/opt/openssl
+```
+
+This will replace your current system wide Ruby for the user running Mineshaft.
+
 ## Authors
 
 Cameron Testerman   --  cameronbtesterman@gmail.com

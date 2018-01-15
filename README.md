@@ -43,6 +43,6 @@ This will replace your current system wide Ruby for the user running Mineshaft.
 
 Cameron Testerman   --  cameronbtesterman@gmail.com
 
-Copyright 2017, Cameron Testerman
+Copyright 2018, Cameron Testerman
 
 Released under MIT license.  

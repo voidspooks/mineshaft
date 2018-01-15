@@ -1,9 +1,16 @@
 require_relative "lib/mineshaft/version"
+require_relative "lib/mineshaft/date"
+require "date"
+
+date  = DateTime.now
+year  = date.year
+month = date.month.digits.count == 1 ? Mineshaft::Date.prepend_zero(date.month) : date.month
+day   = date.day.digits.count   == 1 ? Mineshaft::Date.prepend_zero(date.day)   : date.day
 
 Gem::Specification.new do |spec|
   spec.name                        = "mineshaft"
   spec.version                     = Mineshaft::VERSION
-  spec.date                        = "2017-12-25"
+  spec.date                        = "#{year}-#{month}-#{day}"
   spec.summary                     = "Ruby virtual environment manager"
   spec.authors                     = [ "Cameron Testerman" ]
   spec.email                       = "cameronbtesterman@gmail.com"

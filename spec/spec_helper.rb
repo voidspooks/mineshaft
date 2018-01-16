@@ -1,1 +1,1 @@
-require 'ruby-venv'
+require 'mineshaft'

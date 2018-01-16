@@ -7,6 +7,7 @@
 # Copyright (c) 2017 Cameron Testerman
 
 require 'fileutils'
+require 'yaml'
 
 module Mineshaft
   class Environment

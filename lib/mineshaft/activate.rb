@@ -19,13 +19,13 @@ module Mineshaft
 
     def create
       script_path = File.join(@dir, "bin/activate.sh")
-      File.chmod(0755, script_path)
       File.truncate(script_path, 0) if File.exist?(script_path)
       @template_file.each do |line|
         File.open(script_path, "a") do |file|
           file.write(render(line))
         end
       end
+      File.chmod(0755, script_path)
     end
 
     private

@@ -6,7 +6,7 @@
 # email:: cameronbtesterman@gmail.com
 # created:: 2017-04-14 1:19PM
 #
-# Copyright (c) 2017 Cameron Testerman
+# Copyright (c) 2017-2018 Cameron Testerman
 
 require "mineshaft"
 require "optparse"
@@ -18,7 +18,7 @@ parser = OptionParser.new do |opts|
   opts.banner = "Usage: mineshaft [command] [options]"
   opts.separator ""
   opts.separator "Commands"
-  opts.separator "    new                              create new environment"
+  opts.separator "    new                              creates new environment"
   opts.separator "    global                           installs Ruby environment globally"
   opts.separator ""
   opts.separator "Options"
@@ -32,13 +32,13 @@ parser = OptionParser.new do |opts|
 
   opts.on("-r",
     "--ruby-version VERSION",
-    "specify the version of Ruby to install") do |version|
+    "specifies the version of Ruby to install") do |version|
       options[:version] = version
   end
 
   opts.on("-o",
     "--with-openssl-dir DIR",
-    "specify the directory where OpenSSL is installed") do |openssl_dir|
+    "specifies the directory where OpenSSL is installed") do |openssl_dir|
       options[:openssl_dir] = openssl_dir
   end
 end
@@ -50,5 +50,7 @@ if ARGV[0] == "new"
   Mineshaft::Environment.new(dir_name, options).create
 elsif ARGV[0] == "global"
   options[:global] = true
-  Mineshaft::Environment.new(options[:version], options).create
+  env = Mineshaft::Environment.new(options[:version], options)
+  env.create
+  env.set_global_ruby
 end

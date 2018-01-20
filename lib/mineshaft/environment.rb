@@ -4,7 +4,7 @@
 # email:: cameronbtesterman@gmail.com
 # created:: 2017-04-14 1:19PM
 #
-# Copyright (c) 2017 Cameron Testerman
+# Copyright (c) 2017-2018 Cameron Testerman
 
 require 'fileutils'
 require 'yaml'
@@ -28,6 +28,16 @@ module Mineshaft
       FileUtils::mkdir_p(@dir)
       install_ruby
       create_template
+    end
+    
+    # TODO: PATH should be set instead to ~/.mineshaft/bin. 
+    # Inside .mineshaft/bin will be symbolic links to the
+    # proper Ruby global environment.
+    def set_global_ruby
+      puts "Setting #{@version} as the global ruby version"
+      f = File.open("#{Dir.home}/.bash_profile", "a") 
+      f.write("export PATH=#{@dir}/bin:$PATH")
+      f.close 
     end
 
     private

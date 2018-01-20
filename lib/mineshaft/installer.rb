@@ -4,7 +4,7 @@
 # email:: cameronbtesterman@gmail.com
 # created:: 2017-04-14 1:19PM
 #
-# Copyright (c) 2017 Cameron Testerman
+# Copyright (c) 2017-2018 Cameron Testerman
 
 require 'fileutils'
 require 'net/http'
@@ -89,13 +89,13 @@ module Mineshaft
     end
 
     def configure_options(prefix)
-      config = "./configure --prefix #{Dir.pwd}/#{prefix}"
+      config = @options[:global] ? "./configure --prefix #{prefix}" : "./configure --prefix #{Dir.pwd}/#{prefix}"
       config << " --with-openssl-dir=#{@options[:openssl_dir]}"
     end
 
     def build(prefix)
       puts "Building environment in #{prefix}"
-      dir = "#{Dir.pwd}/#{prefix}/ruby-#@version"
+      dir = @options[:global] ? "#{prefix}/ruby-#@version" : "#{Dir.pwd}/#{prefix}/ruby-#@version"
       commands = [
         "chmod +x configure tool/ifchange",
         configure_options(prefix),

@@ -26,6 +26,7 @@ module Mineshaft
 
     def create
       FileUtils::mkdir_p(@dir)
+      FileUtils::mkdir_p("#{Dir.home}/.mineshaft/bin")
       install_ruby
       create_template
     end
@@ -35,9 +36,13 @@ module Mineshaft
     # proper Ruby global environment.
     def set_global_ruby
       puts "Setting #{@version} as the global ruby version"
-      f = File.open("#{Dir.home}/.bash_profile", "a") 
-      f.write("export PATH=#{@dir}/bin:$PATH")
-      f.close 
+      if File.readlines("#{Dir.home}/.bash_profile").grep(/mineshaft/).size > 0
+        f = File.open("#{Dir.home}/.bash_profile", "a")
+        f.write("export PATH=#{Dir.home}/.mineshaft/bin:$PATH")
+        f.close
+      end
+      binaries = Dir["#{@dir}/bin"]
+      puts binaries
     end
 
     private

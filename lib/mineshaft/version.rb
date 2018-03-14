@@ -7,5 +7,5 @@
 # Copyright (c) 2017 Cameron Testerman
 
 module Mineshaft
-  VERSION = "1.1.1"
+  VERSION = "1.2.0"
 end

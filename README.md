@@ -1,6 +1,10 @@
 # Mineshaft
 Inspired by PyPA's Virtualenv, Mineshaft allows for the creation of isolated Ruby virtual environments. It aims to simplify the process of installing and using multiple versions of Ruby.
 
+## Supported Platforms
+
+Mineshaft is supported on MacOS, Linux, and Windows.
+
 ## Installation
 
 Mineshaft is a Ruby gem, so you will need a working Ruby environment to use it.
@@ -17,7 +21,7 @@ Create a new environment and install the latest stable version of Ruby.
 mineshaft new <name_of_environment>
 ```
 
-Create a new environment and specify the version of Ruby with `-r` and the OpenSSL install with `-o`.
+Create a new environment and specify the version of Ruby with `-r` and the OpenSSL install with `-o`. In order to successfully install gems, you will need to have a working version of OpenSSL installed when running Mineshaft on Linux or MacOS.
 
 ```bash
 mineshaft new .env -r 2.5.0 -o /usr/local/opt/openssl
@@ -29,7 +33,7 @@ To use the new environment, you must activate it using the `activate.sh` script.
 source .env/bin/activate.sh
 ```
 
-*Please note: The global option is still under development and should be considered experimental at this point in time.* 
+*Please note: The global option is still under development and should be considered experimental at this point in time.*
 
 You can install a Ruby environment globally by running the following command.
 

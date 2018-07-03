@@ -40,7 +40,7 @@ source env/bin/activate.sh
 You can install a Ruby environment globally by running the following command.
 
 ```bash
-mineshaft global -r 2.5.0
+mineshaft global -r 2.6.0
 ```
 
 This will replace your current system wide Ruby for the user running Mineshaft.

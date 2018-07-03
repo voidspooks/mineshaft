@@ -9,24 +9,30 @@ Mineshaft is a Ruby gem, so you will need a working Ruby environment to use it.
 gem install mineshaft
 ```
 
+To build Ruby environments that are able to download gems from RubyGems, you will also need to install OpenSSL. You can install OpenSSL on MacOS via Homebrew.
+
+```bash
+brew install openssl
+```
+
 ## Usage
 
 Create a new environment and install the latest stable version of Ruby.
 
 ```bash
-mineshaft new <name_of_environment>
+mineshaft new env
 ```
 
-Create a new environment and specify the version of Ruby with `-r` and the OpenSSL install with `-o`.
+To specify a particular version of Ruby, use the `-r` flag.
 
 ```bash
-mineshaft new .env -r 2.5.0 -o /usr/local/opt/openssl
+mineshaft new env -r 2.6.0
 ```
 
 To use the new environment, you must activate it using the `activate.sh` script.
 
 ```bash
-source .env/bin/activate.sh
+source env/bin/activate.sh
 ```
 
 *Please note: The global option is still under development and should be considered experimental at this point in time.* 
@@ -34,7 +40,7 @@ source .env/bin/activate.sh
 You can install a Ruby environment globally by running the following command.
 
 ```bash
-mineshaft global -r 2.5.0 -o /usr/local/opt/openssl
+mineshaft global -r 2.5.0
 ```
 
 This will replace your current system wide Ruby for the user running Mineshaft.

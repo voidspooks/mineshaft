@@ -12,7 +12,10 @@ require "mineshaft"
 require "optparse"
 require "yaml"
 
-options = {}
+options = {
+  openssl_dir: "/usr/local/opt/openssl",
+  version: Mineshaft::Constants::RUBY_VERSION_STABLE
+}
 
 parser = OptionParser.new do |opts|
   opts.banner = "Usage: mineshaft [command] [options]"

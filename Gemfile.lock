@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    mineshaft (0.4.0)
+    mineshaft (1.2.0)
 
 GEM
   remote: https://rubygems.org/
@@ -29,4 +29,4 @@ DEPENDENCIES
   rspec (~> 3.4)
 
 BUNDLED WITH
-   1.15.4
+   1.16.1

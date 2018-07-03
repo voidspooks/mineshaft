@@ -14,7 +14,7 @@ require 'mineshaft/shell'
 
 module Mineshaft
   class Installer
-    attr_accessor :url, :directory, :version, :options
+    attr_accessor :url, :directory, :version, :options, :global
 
     include Mineshaft::Shell
 
@@ -24,7 +24,7 @@ module Mineshaft
     end
 
     def self.get_latest_stable
-      "2.5.0"
+      "2.5.1"
     end
 
     def run
@@ -95,7 +95,7 @@ module Mineshaft
 
     def build(prefix)
       puts "Building environment in #{prefix}"
-      dir = "#{Dir.pwd}/#{prefix}/ruby-#@version"
+      dir = @global ? "#{prefix}/ruby-#@version" : "#{Dir.pwd}/#{prefix}/ruby-#@version"
       commands = [
         "chmod +x configure tool/ifchange",
         configure_options(prefix),

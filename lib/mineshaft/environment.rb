@@ -38,6 +38,7 @@ module Mineshaft
         config.directory = @dir
         config.version = @version
         config.options = @options
+        config.global = @options[:global]
       end.run
     end
 

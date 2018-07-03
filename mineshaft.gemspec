@@ -4,8 +4,8 @@ require "date"
 
 date  = DateTime.now
 year  = date.year
-month = date.month.digits.count == 1 ? Mineshaft::Date.prepend_zero(date.month) : date.month
-day   = date.day.digits.count   == 1 ? Mineshaft::Date.prepend_zero(date.day)   : date.day
+month = date.month.to_s.length == 1 ? Mineshaft::Date.prepend_zero(date.month) : date.month
+day   = date.day.to_s.length   == 1 ? Mineshaft::Date.prepend_zero(date.day)   : date.day
 
 Gem::Specification.new do |spec|
   spec.name                        = "mineshaft"

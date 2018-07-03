@@ -21,7 +21,7 @@ module Mineshaft
       end
       @options = options
       @versions = YAML.load_file(File.join(File.dirname(File.expand_path(__FILE__)), '../../versions/versions.yaml'))
-      @version = @options[:version] ? @options[:version] : Mineshaft::Installer.get_latest_stable
+      @version = @options[:version] ? @options[:version] : Mineshaft::Constants::RUBY_VERSION_STABLE
     end
 
     def create

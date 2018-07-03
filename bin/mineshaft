@@ -14,15 +14,20 @@ require "yaml"
 
 options = {
   openssl_dir: "/usr/local/opt/openssl",
-  version: Mineshaft::Constants::RUBY_VERSION_STABLE
+  version: Mineshaft::Constants::RUBY_VERSION_STABLE,
+  global: false
 }
+
+if ARGV[0] == "new"
+  new_arg = ARGV[ARGV.index("new") + 1]
+  new_env = true
+end
 
 parser = OptionParser.new do |opts|
   opts.banner = "Usage: mineshaft [command] [options]"
   opts.separator ""
   opts.separator "Commands"
   opts.separator "    new                              create new environment"
-  opts.separator "    global                           installs Ruby environment globally"
   opts.separator ""
   opts.separator "Options"
 
@@ -44,14 +49,14 @@ parser = OptionParser.new do |opts|
     "specify the directory where OpenSSL is installed") do |openssl_dir|
       options[:openssl_dir] = openssl_dir
   end
+
+  opts.on("-g",
+    "--global",
+    "install the Ruby environment globally") do |global|
+    options[:global] = true
+    options[:version] = new_arg
+  end
 end
 
 parser.parse!
-
-if ARGV[0] == "new"
-  dir_name = ARGV[ARGV.index("new") + 1]
-  Mineshaft::Environment.new(dir_name, options).create
-elsif ARGV[0] == "global"
-  options[:global] = true
-  Mineshaft::Environment.new(options[:version], options).create
-end
+Mineshaft::Environment.new(new_arg, options).create if new_env

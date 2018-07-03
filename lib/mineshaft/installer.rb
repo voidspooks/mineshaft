@@ -23,10 +23,6 @@ module Mineshaft
       yield self
     end
 
-    def self.get_latest_stable
-      "2.5.1"
-    end
-
     def run
       download @url, @directory
       unzip          @directory
@@ -89,13 +85,13 @@ module Mineshaft
     end
 
     def configure_options(prefix)
-      config = "./configure --prefix #{Dir.pwd}/#{prefix}"
+      config = "./configure --prefix #{@directory}"
       config << " --with-openssl-dir=#{@options[:openssl_dir]}"
     end
 
     def build(prefix)
       puts "Building environment in #{prefix}"
-      dir = @global ? "#{prefix}/ruby-#@version" : "#{Dir.pwd}/#{prefix}/ruby-#@version"
+      dir = "#{@directory}/ruby-#@version"
       commands = [
         "chmod +x configure tool/ifchange",
         configure_options(prefix),

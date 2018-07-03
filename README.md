@@ -26,7 +26,7 @@ mineshaft new env
 To specify a particular version of Ruby, use the `-r` flag.
 
 ```bash
-mineshaft new env -r 2.6.0
+mineshaft new env -r 2.
 ```
 
 To use the new environment, you must activate it using the `activate.sh` script.
@@ -35,12 +35,10 @@ To use the new environment, you must activate it using the `activate.sh` script.
 source env/bin/activate.sh
 ```
 
-*Please note: The global option is still under development and should be considered experimental at this point in time.* 
-
 You can install a Ruby environment globally by running the following command.
 
 ```bash
-mineshaft global -r 2.6.0
+mineshaft new 2.5.1 -g
 ```
 
 This will replace your current system wide Ruby for the user running Mineshaft.

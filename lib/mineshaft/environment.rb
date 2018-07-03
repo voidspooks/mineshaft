@@ -27,7 +27,11 @@ module Mineshaft
     def create
       FileUtils::mkdir_p(@dir)
       install_ruby
-      create_template
+      if @options[:global]
+        set_new_global
+      else
+        create_template
+      end
     end
 
     private
@@ -45,6 +49,21 @@ module Mineshaft
     def create_template
       template_file = File.open(File.join(File.dirname(File.expand_path(__FILE__)), '../../environment/activate.sh.erb'))
       Mineshaft::ActivateTemplate.new(@dir, template_file).create
+    end
+
+    def set_new_global
+      FileUtils::mkdir_p("#{Dir.home}/.mineshaft/bin")
+
+      if File.readlines("#{Dir.home}/.bash_profile").grep(/mineshaft/).length == 0
+        open("#{Dir.home}/.bash_profile", 'a') do |f|
+          f.puts("PATH=#{Dir.home}/.mineshaft/bin:$PATH")
+        end
+      end
+
+      Dir["#{@dir}/bin/*"].each do |binary_absolute|
+        binary = binary_absolute.split("/").last
+        FileUtils::ln_s binary_absolute, "#{Dir.home}/.mineshaft/bin/#{binary}" 
+      end
     end
   end
 end

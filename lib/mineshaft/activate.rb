@@ -4,7 +4,7 @@
 # email:: cameronbtesterman@gmail.com
 # created:: 2017-10-26 8:46PM
 #
-# Copyright (c) 2017 Cameron Testerman
+# Copyright (c) 2017-2018 Cameron Testerman
 require 'erb'
 
 module Mineshaft

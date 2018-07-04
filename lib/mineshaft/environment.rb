@@ -52,7 +52,8 @@ module Mineshaft
     end
 
     def set_new_global
-      FileUtils::mkdir_p("#{Dir.home}/.mineshaft/bin")
+      FileUtils.mkdir_p "#{Dir.home}/.mineshaft/bin"
+      FileUtils.rm Dir.glob("#{Dir.home}/.mineshaft/bin/*")
 
       if File.readlines("#{Dir.home}/.bash_profile").grep(/mineshaft/).length == 0
         open("#{Dir.home}/.bash_profile", 'a') do |f|

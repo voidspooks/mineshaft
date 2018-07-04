@@ -21,13 +21,16 @@ options = {
 if ARGV[0] == "new"
   new_arg = ARGV[ARGV.index("new") + 1]
   new_env = true
+elsif ARGV[0] == "list"
+  Mineshaft::List.display
 end
 
 parser = OptionParser.new do |opts|
   opts.banner = "Usage: mineshaft [command] [options]"
   opts.separator ""
   opts.separator "Commands"
-  opts.separator "    new                              create new environment"
+  opts.separator "    new                              creates new environment"
+  opts.separator "    list                             lists the ten latest versions of Ruby available to install"
   opts.separator ""
   opts.separator "Options"
 

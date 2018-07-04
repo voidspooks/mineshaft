@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.3.0] 2018-07-??
 ### Added
 - All previous Ruby versions are now available to install
+- Added `list` keyword, which lists the latest ten Ruby versions available for install
 
 ## [1.2.0] - 2018-07-02
 ### Added

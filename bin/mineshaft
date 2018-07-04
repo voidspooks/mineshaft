@@ -23,6 +23,8 @@ if ARGV[0] == "new"
   new_env = true
 elsif ARGV[0] == "list"
   Mineshaft::List.display
+elsif ARGV[0] == "reload"
+  reload = true
 end
 
 parser = OptionParser.new do |opts|
@@ -62,4 +64,5 @@ parser = OptionParser.new do |opts|
 end
 
 parser.parse!
+Mineshaft.reload_binaries
 Mineshaft::Environment.new(new_arg, options).create if new_env

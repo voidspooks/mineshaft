@@ -33,6 +33,7 @@ parser = OptionParser.new do |opts|
   opts.separator "Commands"
   opts.separator "    new                              creates new environment"
   opts.separator "    list                             lists the ten latest versions of Ruby available to install"
+  opts.separator "    reload                           reloads binaries using the current global Ruby version"
   opts.separator ""
   opts.separator "Options"
 

@@ -17,9 +17,9 @@ brew install openssl
 
 ## Usage
 
-Create a new environment and install the latest stable version of Ruby.
-
 ### Creating a Virtual Environment
+
+Create a new environment and install the latest stable version of Ruby.
 
 ```bash
 mineshaft new env

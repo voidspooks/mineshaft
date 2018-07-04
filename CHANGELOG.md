@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - All previous Ruby versions are now available to install
 - Added `list` keyword, which lists the latest ten Ruby versions available for install
+- Added `reload` keyword, which allows binaries from current global Ruby version to be reloaded into the `bin` directory
 
 ## [1.2.0] - 2018-07-02
 ### Added

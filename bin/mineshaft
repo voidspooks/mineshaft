@@ -65,5 +65,5 @@ parser = OptionParser.new do |opts|
 end
 
 parser.parse!
-Mineshaft.reload_binaries
+Mineshaft.reload_binaries if reload
 Mineshaft::Environment.new(new_arg, options).create if new_env

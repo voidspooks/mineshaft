@@ -85,7 +85,7 @@ module Mineshaft
     end
 
     def configure_options(prefix)
-      config = "./configure --prefix #{@directory}"
+      config = @global ? "./configure --prefix #{@directory}" : "./configure --prefix #{File.expand_path(@directory)}"
       config << " --with-openssl-dir=#{@options[:openssl_dir]}"
     end
 

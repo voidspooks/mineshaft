@@ -53,6 +53,14 @@ When you install a gem that has a binary associated with it, you will need to re
 mineshaft reload
 ```
 
+### Switching Between Global Environments
+
+To switch between environments, use the `use` keyword followed by a version of Ruby installed on your machine.
+
+```bash
+mineshaft use 2.5.1
+```
+
 ## Authors
 
 Cameron Testerman   --  cameronbtesterman@gmail.com

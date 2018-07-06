@@ -21,6 +21,6 @@ Gem::Specification.new do |spec|
   spec.homepage                    = "https://github.com/camerontesterman/mineshaft"
   spec.license                     = "MIT"
 
-  spec.executables                 << "mineshaft"
+  spec.executables                 << "ms"
   spec.add_development_dependency  'rspec', '~> 3.4'
 end

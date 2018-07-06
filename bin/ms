@@ -31,7 +31,7 @@ elsif ARGV[0] == "use"
 end
 
 parser = OptionParser.new do |opts|
-  opts.banner = "Usage: mineshaft [command] [options]"
+  opts.banner = "Usage: ms [command] [options]"
   opts.separator ""
   opts.separator "Commands"
   opts.separator "    new                              creates new environment"

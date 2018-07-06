@@ -24,10 +24,10 @@ if ARGV[0] == "new"
 elsif ARGV[0] == "list"
   Mineshaft::List.display
 elsif ARGV[0] == "reload"
-  reload? = true
+  reload = true
 elsif ARGV[0] == "use"
   environment = ARGV[ARGV.index("use") + 1]
-  use_environment? = true
+  use_environment = true
 end
 
 parser = OptionParser.new do |opts|
@@ -68,6 +68,12 @@ parser = OptionParser.new do |opts|
 end
 
 parser.parse!
-Mineshaft.reload_binaries if reload?
-Mineshaft::Environment.use environment if use_environment?
+
+Mineshaft.reload_binaries if reload
+
+if use_environment
+  options[:global] = true
+  Mineshaft::Environment.new(environment, options).use 
+end
+
 Mineshaft::Environment.new(new_arg, options).create if new_env

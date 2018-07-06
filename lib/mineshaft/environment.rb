@@ -28,10 +28,15 @@ module Mineshaft
       FileUtils::mkdir_p(@dir)
       install_ruby
       if @options[:global]
-        set_new_global
+        set_new_global @dir
       else
         create_template
       end
+    end
+
+    def use
+      set_new_global
+      puts "Now using the environment at: #@dir" 
     end
 
     private
@@ -52,6 +57,11 @@ module Mineshaft
     end
 
     def set_new_global
+      if Dir["#{@dir}/bin/*"].length == 0
+        puts "#@dir is not a valid environment - exiting" 
+        exit
+      end
+
       FileUtils.mkdir_p "#{Dir.home}/.mineshaft/bin"
       FileUtils.rm Dir.glob("#{Dir.home}/.mineshaft/bin/*")
 

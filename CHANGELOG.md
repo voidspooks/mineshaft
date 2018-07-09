@@ -4,6 +4,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0] 2018-07-08
+### Added
+- When a new global Ruby version is installed, the latest Mineshaft gem will be installed as well
+- Tests added for `Mineshaft::Date`, `Mineshaft::Installer`, `Mineshaft::ActivateTemplate`
+
 ## [2.0.0] 2018-07-06
 ### Changed
 - To run the tool, you must now use `ms` instead of `mineshaft` in your terminal window

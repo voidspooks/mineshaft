@@ -28,7 +28,7 @@ module Mineshaft
       FileUtils::mkdir_p(@dir)
       install_ruby
       if @options[:global]
-        set_new_global @dir
+        set_new_global
       else
         create_template
       end

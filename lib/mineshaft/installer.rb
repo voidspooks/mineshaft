@@ -99,6 +99,7 @@ module Mineshaft
         "make install"
       ]
       commands.each { |command| shell(dir, command) }
+      shell dir, 'bin/gem install mineshaft'
     end
   end
 end

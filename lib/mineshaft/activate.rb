@@ -20,10 +20,16 @@ module Mineshaft
 
     def create
       script_path = File.join(@dir, "bin/activate.sh")
-      File.truncate(script_path, 0) if File.exist?(script_path)
+
+      if File.exist?(script_path)
+        File.truncate(script_path, 0)
+        mode = 'w'
+      end
+
+      mode ||= 'a'
 
       @template_file.each do |line|
-        File.open(script_path, "a") do |file|
+        File.open(script_path, mode) do |file|
           file.write(render(line))
         end
       end

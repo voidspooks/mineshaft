@@ -37,6 +37,7 @@ parser = OptionParser.new do |opts|
   opts.separator "    new                              creates new environment"
   opts.separator "    list                             lists the ten latest versions of Ruby available to install"
   opts.separator "    reload                           reloads binaries using the current global Ruby version"
+  opts.separator "    use                              selects an installed global Ruby environment to use"
   opts.separator ""
   opts.separator "Options"
 
@@ -65,11 +66,18 @@ parser = OptionParser.new do |opts|
     options[:global] = true
     options[:version] = new_arg
   end
+
+  opts.on("-i",
+    "--installed",
+    "lists the globally installed and available Rubies") do |installed|
+    options[:installed] = true
+  end
 end
 
 parser.parse!
 
 Mineshaft.reload_binaries if reload
+Mineshaft.list_globals    if options[:installed]
 
 if use_environment
   options[:global] = true

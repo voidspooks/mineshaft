@@ -6,7 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [2.1.0] 2018-07-08
 ### Added
-- When a new global Ruby version is installed, the latest Mineshaft gem will be installed as well
+- TODO: When a new global Ruby version is installed, the latest Mineshaft gem will be installed as well
+- `-i` flag added; shows all installed global Rubies
 - Tests added for `Mineshaft::Date`, `Mineshaft::Installer`, `Mineshaft::ActivateTemplate`
 
 ## [2.0.0] 2018-07-06

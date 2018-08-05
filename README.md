@@ -45,6 +45,12 @@ You can install a Ruby environment globally by running the following command. Pl
 ms new 2.5.1 -g
 ```
 
+To view all globally installed Rubies, use `-i`
+
+```bash
+ms -i
+```
+
 ### Reloading Binaries
 
 When you install a gem that has a binary associated with it, you will need to reload your global Ruby `bin` directory.

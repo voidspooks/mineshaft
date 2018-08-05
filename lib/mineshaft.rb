@@ -8,6 +8,7 @@
 
 require "mineshaft/constants"
 require "mineshaft/list"
+require "mineshaft/list_globals"
 require "mineshaft/reload"
 require "mineshaft/environment"
 require "mineshaft/installer"

@@ -67,6 +67,12 @@ parser = OptionParser.new do |opts|
     options[:version] = new_arg
   end
 
+  opts.on("-n",
+    "--no-openssl-dir",
+    "do not set the OpenSSL directory - otherwise this defaults to /usr/local/opt/openssl") do |no_openssl|
+      options[:no_openssl_dir] = true
+  end
+
   opts.on("-i",
     "--installed",
     "lists the globally installed and available Rubies") do |installed|

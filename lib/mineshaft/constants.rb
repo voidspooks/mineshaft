@@ -8,7 +8,7 @@
 
 module Mineshaft
   module Constants
-    RUBY_VERSION_STABLE = '2.5.1'
+    RUBY_VERSION_STABLE = '2.5.3'
     GLOBAL_DIR = "#{Dir.home}/.mineshaft"
     GLOBAL_BIN = "#{GLOBAL_DIR}/bin"
   end

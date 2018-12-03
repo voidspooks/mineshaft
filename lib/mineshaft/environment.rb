@@ -8,6 +8,7 @@
 
 require 'fileutils'
 require 'yaml'
+require 'mineshaft/reload'
 
 module Mineshaft
   class Environment
@@ -29,8 +30,10 @@ module Mineshaft
       install_ruby
       if @options[:global]
         set_new_global
+        `gem install mineshaft`
+        Mineshaft.reload_binaries
       else
-        create_template
+        create_activate_script
       end
     end
 
@@ -51,9 +54,28 @@ module Mineshaft
       end.run
     end
 
-    def create_template
-      template_file = File.open(File.join(File.dirname(File.expand_path(__FILE__)), '../../environment/activate.sh.erb'))
-      Mineshaft::ActivateTemplate.new(@dir, template_file).create
+    def install_mineshaft
+    end
+
+    def create_activate_script
+      open("#{@dir}/bin/activate.sh", 'w') do |f|
+        f << "#!/bin/bash\n"
+        f << "#\n"
+        f << "# activate.sh\n"
+        f << "\n"
+        f << "OLDPS1=$PS1\n"
+        f << "ENV=#{@dir}\n"
+        f << 'PS1="($ENV)${OLDPS1}"'
+        f << "\n"
+        f << "\n"
+        f << "OLDPATH=$PATH\n"
+        f << "PATH=#{File.expand_path("#{@dir}/bin")}:$OLDPATH\n"
+        f << "\n"
+        f << "deactivate() {\n"
+        f << "  PS1=$OLDPS1\n"
+        f << "  PATH=$OLDPATH\n"
+        f << "}\n\n"
+      end
     end
 
     def set_new_global

@@ -16,8 +16,7 @@ Gem::Specification.new do |spec|
   spec.email                       = "cameronbtesterman@gmail.com"
   spec.files                       = Dir["lib/mineshaft/*.rb"] +
                                      Dir["lib/*.rb"] +
-                                     Dir["versions/versions.yaml"] +
-                                     Dir["environment/activate.sh.erb"]
+                                     Dir["versions/versions.yaml"]
   spec.homepage                    = "https://github.com/camerontesterman/mineshaft"
   spec.license                     = "MIT"
 

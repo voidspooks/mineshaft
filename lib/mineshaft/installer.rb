@@ -91,6 +91,7 @@ module Mineshaft
 
     def build(prefix)
       puts "Building environment in #{prefix}"
+      puts "Directory is #{@directory}"
       dir = "#{@directory}/ruby-#@version"
       commands = [
         "chmod +x configure tool/ifchange",
@@ -99,7 +100,6 @@ module Mineshaft
         "make install"
       ]
       commands.each { |command| shell(dir, command) }
-      shell dir, 'bin/gem install mineshaft'
     end
   end
 end

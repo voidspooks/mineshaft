@@ -74,9 +74,11 @@ module Mineshaft
       tar_extract.rewind
       puts "Unzipping archive"
       tar_extract.each do |entry|
-        if entry.directory?
+        if entry.full_name.split('').last == '/'
+          puts "extracted dir: #{dir}/#{entry.full_name}"
           FileUtils::mkdir_p("#{dir}/#{entry.full_name}")
         elsif entry.file?
+          puts "extracted file: #{dir}/#{entry.full_name}"
           File.open("#{dir}/#{entry.full_name}", 'w') {|file| file.write(entry.read)}
         end
       end

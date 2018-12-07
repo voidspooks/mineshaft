@@ -15,11 +15,7 @@ module Mineshaft
     attr_reader :dir
 
     def initialize(dir, options)
-      if options[:global]
-        @dir = File.join(Dir.home, ".mineshaft", dir)
-      else
-        @dir = dir
-      end
+      @dir = options[:global] ? File.join(Dir.home, ".mineshaft", dir) : dir
       @options = options
       @versions = YAML.load_file(File.join(File.dirname(File.expand_path(__FILE__)), '../../versions/versions.yaml'))
       @version = @options[:version] ? @options[:version] : Mineshaft::Constants::RUBY_VERSION_STABLE

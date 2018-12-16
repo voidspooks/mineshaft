@@ -8,7 +8,7 @@
 
 require 'fileutils'
 require 'yaml'
-require 'mineshaft/reload'
+require 'mineshaft/commands'
 
 module Mineshaft
   class Environment
@@ -27,7 +27,7 @@ module Mineshaft
       if @options[:global]
         set_new_global
         `gem install mineshaft`
-        Mineshaft.reload_binaries
+        Mineshaft.reload
       else
         create_activate_script
       end

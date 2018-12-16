@@ -6,6 +6,8 @@
 #
 # Copyright (c) 2017-2018 Cameron Testerman
 
+require 'yaml'
+
 module Mineshaft
   def self.env
     rubies = Dir["#{Mineshaft::Constants::GLOBAL_DIR}/*"]
@@ -29,6 +31,28 @@ module Mineshaft
   end
 
   def self.reload
-    Mineshaft.reload_binaries
+    ruby = File.readlink("#{Dir.home}/.mineshaft/bin/ruby").split('/')
+    bin_dir = ruby.shift(ruby.length - 1).join("/")
+    FileUtils.rm Dir.glob("#{Dir.home}/.mineshaft/bin/*")
+
+    Dir["#{bin_dir}/*"].each do |binary_absolute|
+      binary = binary_absolute.split("/").last
+      FileUtils::ln_s binary_absolute, "#{Dir.home}/.mineshaft/bin/#{binary}" 
+    end
+
+    puts "Binaries successfully reloaded!"
+  end
+
+  def self.list
+    versions = YAML.load_file(File.join(File.dirname(File.expand_path(__FILE__)), '../../versions/versions.yaml'))
+    last_ten = []
+
+    Hash[versions.sort_by {|k, v| -v }[versions.length - 10..versions.length]].each do |version, url|
+      last_ten.push(version)
+    end
+
+    puts "Latest 10 Ruby versions available for download"
+    puts "--------------------------------"
+    last_ten.reverse.each {|ver| puts ver}
   end
 end

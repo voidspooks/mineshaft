@@ -11,7 +11,6 @@
 require "mineshaft"
 require "optparse"
 require "yaml"
-extend Mineshaft::Sugar
 
 options = {
   openssl_dir: "/usr/local/opt/openssl",
@@ -23,12 +22,12 @@ parser = OptionParser.new do |opts|
   opts.banner = "Usage: ms [command] [options]"
   opts.separator ""
   opts.separator "Commands"
-  opts.separator "    new                              creates new environment"
+  opts.separator "    env                              shows a list of all installed global Rubies, with the current one in use highlighted"
   opts.separator "    install                          installs a new global Ruby"
   opts.separator "    list                             lists the ten latest versions of Ruby available to install"
+  opts.separator "    new                              creates new environment"
   opts.separator "    reload                           reloads binaries using the current global Ruby version"
   opts.separator "    use                              selects an installed global Ruby environment to use"
-  opts.separator "    env                              shows a list of all installed global Rubies, with the current one in use highlighted"
   opts.separator ""
   opts.separator "Options"
 
@@ -55,18 +54,22 @@ end
 parser.parse!
 
 case ARGV[0]
+when "env"
+  Mineshaft.env
+when "install"
+  Mineshaft.install
+when "list"
+  Mineshaft.list
 when "new"
   name = ARGV[ARGV.index("new") + 1]
   options[:version] = ARGV[2] if ARGV[2]
-  create_environment(name, options)
-when "list"
-  list_globals
+  Mineshaft.new(name, options)
+when "reload"
+  Mineshaft.reload
 when "use"
   name = ARGV[ARGV.index("use") + 1]
   options[:global] = true
-  use_environment(name, options)
-when "reload"
-  reload_binaries
+  Mineshaft.use(name, options)
 else
   puts "Unrecognized command - #{ARGV[0]}" 
 end

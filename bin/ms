@@ -38,6 +38,7 @@ parser = OptionParser.new do |opts|
   opts.separator "    list                             lists the ten latest versions of Ruby available to install"
   opts.separator "    reload                           reloads binaries using the current global Ruby version"
   opts.separator "    use                              selects an installed global Ruby environment to use"
+  opts.separator "    env                              shows a list of all installed global Rubies, with the current one in use highlighted"
   opts.separator ""
   opts.separator "Options"
 

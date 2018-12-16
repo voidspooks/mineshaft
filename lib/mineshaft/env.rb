@@ -8,7 +8,6 @@
 
 module Mineshaft
   def Mineshaft.env_list
-    # This should output a list of globally installed Rubies.
-    # The currently used environment should be highlighted.
+    
   end
 end

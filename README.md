@@ -67,6 +67,16 @@ To switch between environments, use the `use` keyword followed by a version of R
 ms use 2.5.3
 ```
 
+## Development Resources
+
+### Running Tests
+
+There is rake test defined to run the test suite. `rspec` ~> 3.4 must be installed as a development dependency prior to running tests. 
+
+```bash
+rake test
+```
+
 ## Authors
 
 Cameron Testerman   --  cameronbtesterman@gmail.com

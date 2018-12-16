@@ -11,5 +11,13 @@ module Mineshaft
     def self.environment(name, options)
       Mineshaft::Environment.new(name, options)
     end
+
+    def self.list_globals
+      Mineshaft.list_globals
+    end
+
+    def self.reload_binaries
+      Mineshaft.reload_binaries
+    end
   end
 end

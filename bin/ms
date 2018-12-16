@@ -19,19 +19,6 @@ options = {
   global: false
 }
 
-if ARGV[0] == "new"
-  env_name = ARGV[1]
-  ruby_version = ARGV[2] if ARGV[2]
-  mode = "new"
-elsif ARGV[0] == "list"
-  Mineshaft::List.display
-elsif ARGV[0] == "reload"
-  mode = ""
-elsif ARGV[0] == "use"
-  env_name = ARGV[ARGV.index("use") + 1]
-  use_environment = true
-end
-
 parser = OptionParser.new do |opts|
   opts.banner = "Usage: ms [command] [options]"
   opts.separator ""
@@ -58,48 +45,28 @@ parser = OptionParser.new do |opts|
       options[:openssl_dir] = openssl_dir
   end
 
-  # opts.on("-g",
-  #   "--global",
-  #   "install the Ruby environment globally") do |global|
-  #   options[:global] = true
-  #   options[:version] = new_arg
-  # end
-
   opts.on("-n",
     "--no-openssl-dir",
     "do not set the OpenSSL directory - otherwise this defaults to /usr/local/opt/openssl") do |no_openssl|
       options[:no_openssl_dir] = true
   end
-
-  # opts.on("-i",
-  #   "--installed",
-  #   "lists the globally installed and available Rubies") do |installed|
-  #   options[:installed] = true
-  # end
 end
 
 parser.parse!
 
 case ARGV[0]
 when "new"
-  env_name = ARGV[1]
+  name = ARGV[ARGV.index("new") + 1]
   options[:version] = ARGV[2] if ARGV[2]
-
-  Mineshaft::Environment.new(new_arg, options).create
+  create_environment(name, options)
 when "list"
+  list_globals
 when "use"
+  name = ARGV[ARGV.index("use") + 1]
+  options[:global] = true
+  use_environment(name, options)
 when "reload"
-
+  reload_binaries
 else
   puts "Unrecognized command - #{ARGV[0]}" 
 end
-
-Mineshaft.reload_binaries if reload
-Mineshaft.list_globals    if options[:installed]
-
-if use_environment
-  options[:global] = true
-  Mineshaft::Environment.new(environment, options).use 
-end
-
-

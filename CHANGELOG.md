@@ -8,8 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - `ms env` will now display all installed global versions of Ruby, with the current version in use highlighted
 
+### Changed
+
+
 ### Deprecated
 - `ms env` will replace `ms -i` - this option has been removed
+- `-r` no longer works; Ruby version is added after either the `install` or `env` keyword
+- `-g` has been removed as well. To install global run `ms install <VERSION_NUMBER>`
 
 ## [3.1.0] 2018-12-07
 ### Added

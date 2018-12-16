@@ -11,6 +11,7 @@
 require "mineshaft"
 require "optparse"
 require "yaml"
+extend Mineshaft::Sugar
 
 options = {
   openssl_dir: "/usr/local/opt/openssl",
@@ -19,14 +20,15 @@ options = {
 }
 
 if ARGV[0] == "new"
-  new_arg = ARGV[ARGV.index("new") + 1]
-  new_env = true
+  env_name = ARGV[1]
+  ruby_version = ARGV[2] if ARGV[2]
+  mode = "new"
 elsif ARGV[0] == "list"
   Mineshaft::List.display
 elsif ARGV[0] == "reload"
-  reload = true
+  mode = ""
 elsif ARGV[0] == "use"
-  environment = ARGV[ARGV.index("use") + 1]
+  env_name = ARGV[ARGV.index("use") + 1]
   use_environment = true
 end
 
@@ -35,6 +37,7 @@ parser = OptionParser.new do |opts|
   opts.separator ""
   opts.separator "Commands"
   opts.separator "    new                              creates new environment"
+  opts.separator "    install                          installs a new global Ruby"
   opts.separator "    list                             lists the ten latest versions of Ruby available to install"
   opts.separator "    reload                           reloads binaries using the current global Ruby version"
   opts.separator "    use                              selects an installed global Ruby environment to use"
@@ -49,24 +52,18 @@ parser = OptionParser.new do |opts|
       exit
   end
 
-  opts.on("-r",
-    "--ruby-version VERSION",
-    "specify the version of Ruby to install") do |version|
-      options[:version] = version
-  end
-
   opts.on("-o",
     "--with-openssl-dir DIR",
     "specify the directory where OpenSSL is installed") do |openssl_dir|
       options[:openssl_dir] = openssl_dir
   end
 
-  opts.on("-g",
-    "--global",
-    "install the Ruby environment globally") do |global|
-    options[:global] = true
-    options[:version] = new_arg
-  end
+  # opts.on("-g",
+  #   "--global",
+  #   "install the Ruby environment globally") do |global|
+  #   options[:global] = true
+  #   options[:version] = new_arg
+  # end
 
   opts.on("-n",
     "--no-openssl-dir",
@@ -83,6 +80,20 @@ end
 
 parser.parse!
 
+case ARGV[0]
+when "new"
+  env_name = ARGV[1]
+  options[:version] = ARGV[2] if ARGV[2]
+
+  Mineshaft::Environment.new(new_arg, options).create
+when "list"
+when "use"
+when "reload"
+
+else
+  puts "Unrecognized command - #{ARGV[0]}" 
+end
+
 Mineshaft.reload_binaries if reload
 Mineshaft.list_globals    if options[:installed]
 
@@ -91,4 +102,4 @@ if use_environment
   Mineshaft::Environment.new(environment, options).use 
 end
 
-Mineshaft::Environment.new(new_arg, options).create if new_env
+

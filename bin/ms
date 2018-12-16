@@ -74,11 +74,11 @@ parser = OptionParser.new do |opts|
       options[:no_openssl_dir] = true
   end
 
-  opts.on("-i",
-    "--installed",
-    "lists the globally installed and available Rubies") do |installed|
-    options[:installed] = true
-  end
+  # opts.on("-i",
+  #   "--installed",
+  #   "lists the globally installed and available Rubies") do |installed|
+  #   options[:installed] = true
+  # end
 end
 
 parser.parse!

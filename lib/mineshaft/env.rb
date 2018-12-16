@@ -6,8 +6,10 @@
 #
 # Copyright (c) 2017-2018 Cameron Testerman
 
+require 'colorize'
+
 module Mineshaft
-  def Mineshaft.env_list
+  def Mineshaft.show_global_rubies
     
   end
 end

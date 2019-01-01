@@ -28,7 +28,7 @@ ms new env
 To specify a particular version of Ruby, add the version number after the env name
 
 ```bash
-ms new env 2.5.3
+ms new env 2.6.0
 ```
 
 To use the new environment, you must activate it using the `activate.sh` script.
@@ -42,7 +42,7 @@ source env/bin/activate.sh
 You can install a Ruby environment globally by running the following command. Specify the version of Ruby after the `install` keyword. This will replace your current system wide Ruby for the user running Mineshaft.
 
 ```bash
-ms install 2.5.3
+ms install 2.6.0
 ```
 
 To view all globally installed Rubies
@@ -64,7 +64,7 @@ ms reload
 To switch between environments, use the `use` keyword followed by a version of Ruby installed on your machine.
 
 ```bash
-ms use 2.5.3
+ms use 2.6.0
 ```
 
 ## Development Resources

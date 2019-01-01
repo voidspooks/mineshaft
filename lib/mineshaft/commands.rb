@@ -4,7 +4,7 @@
 # email:: cameronbtesterman@gmail.com
 # created:: 2018-12-15 10:20PM
 #
-# Copyright (c) 2017-2018 Cameron Testerman
+# Copyright (c) 2017-2019 Cameron Testerman
 
 require 'yaml'
 

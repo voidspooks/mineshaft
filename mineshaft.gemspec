@@ -22,5 +22,5 @@ Gem::Specification.new do |spec|
 
   spec.executables                 << "ms"
   spec.add_development_dependency  'rspec', '~> 3.4'
-  spec.add_runtime_dependency      'colorize', '0.8.1'
+  #spec.add_runtime_dependency      'colorize', '0.8.1'
 end

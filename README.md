@@ -11,12 +11,12 @@ gem install mineshaft
 
 To build Ruby environments that are able to download gems from RubyGems, you will also need to install OpenSSL. You can install OpenSSL on MacOS via Homebrew.
 
-# MacOS
+### MacOS
 ```bash
 brew install openssl
 ```
 
-# RHEL / CentOS / Amazon Linux
+### RHEL / CentOS / Amazon Linux
 ```bash
 yum group install "Development Tools"
 yum install openssl-devel

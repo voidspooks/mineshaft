@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    mineshaft (3.2.0)
+    mineshaft (4.0.0)
       colorize (= 0.8.1)
 
 GEM
@@ -31,4 +31,4 @@ DEPENDENCIES
   rspec (~> 3.4)
 
 BUNDLED WITH
-   1.17.1
+   1.17.2

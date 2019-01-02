@@ -88,12 +88,20 @@ module Mineshaft
 
     def configure_options(prefix)
       config = @global ? "./configure --prefix #{@directory}" : "./configure --prefix #{File.expand_path(@directory)}"
-      config << " --with-openssl-dir=#{@options[:openssl_dir]}" unless @options[:no_openssl_dir]
+
+      if @options[:no_openssl_dir]
+        config
+      else
+        config << " --with-openssl-dir=#{@options[:openssl_dir]}"
+      end
+
+      return config
     end
 
     def build(prefix)
       puts "Building environment in #{prefix}"
       puts "Directory is #{@directory}"
+      puts @options[:no_openssl_dir]
       dir = "#{@directory}/ruby-#@version"
       commands = [
         "chmod +x configure tool/ifchange",

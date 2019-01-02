@@ -16,6 +16,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `-r` no longer works; Ruby version is added after either the `install` or `env` keyword
 - `-g` has been removed as well. To install global run `ms install <VERSION_NUMBER>`
 
+### Fixed
+- `-n` works now and will successfully install Ruby without OpenSSL
+
 ## [3.1.0] 2018-12-07
 ### Added
 - Support for Ruby version 2.6.0-rc1

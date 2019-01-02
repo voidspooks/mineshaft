@@ -57,7 +57,16 @@ case ARGV[0]
 when "env"
   Mineshaft.env
 when "install"
-  Mineshaft.install
+  options[:global] = true
+
+  if ARGV[1]
+    options[:version] = ARGV[1] if ARGV[1]
+    name = options[:version]
+  else
+    name = Mineshaft::Constants::RUBY_VERSION_STABLE
+  end
+
+  Mineshaft.new(name, options)
 when "list"
   Mineshaft.list
 when "new"

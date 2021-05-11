@@ -17,10 +17,9 @@ Gem::Specification.new do |spec|
   spec.files                       = Dir["lib/mineshaft/*.rb"] +
                                      Dir["lib/*.rb"] +
                                      Dir["versions/versions.yaml"]
-  spec.homepage                    = "https://github.com/camerontesterman/mineshaft"
+  spec.homepage                    = "https://gitlab.com/ctesterman/mineshaft"
   spec.license                     = "MIT"
 
   spec.executables                 << "ms"
   spec.add_development_dependency  'rspec', '~> 3.4'
-  #spec.add_runtime_dependency      'colorize', '0.8.1'
 end

@@ -326,6 +326,7 @@
 2.5.1: https://cache.ruby-lang.org/pub/ruby/2.5/ruby-2.5.1.tar.gz
 2.5.2: https://cache.ruby-lang.org/pub/ruby/2.5/ruby-2.5.2.tar.gz
 2.5.3: https://cache.ruby-lang.org/pub/ruby/2.5/ruby-2.5.3.tar.gz
+2.5.7: https://cache.ruby-lang.org/pub/ruby/2.5/ruby-2.5.7.tar.gz
 2.6.0-preview1: https://cache.ruby-lang.org/pub/ruby/2.6/ruby-2.6.0-preview1.tar.gz
 2.6.0-preview2: https://cache.ruby-lang.org/pub/ruby/2.6/ruby-2.6.0-preview2.tar.gz
 2.6.0-preview3: https://cache.ruby-lang.org/pub/ruby/2.6/ruby-2.6.0-preview3.tar.gz
@@ -333,5 +334,11 @@
 2.6.0-rc2: https://cache.ruby-lang.org/pub/ruby/2.6/ruby-2.6.0-rc2.tar.gz
 2.6.0: https://cache.ruby-lang.org/pub/ruby/2.6/ruby-2.6.0.tar.gz
 2.6.1: https://cache.ruby-lang.org/pub/ruby/2.6/ruby-2.6.1.tar.gz
+2.6.2: https://cache.ruby-lang.org/pub/ruby/2.6/ruby-2.6.2.tar.gz
 2.6.3: https://cache.ruby-lang.org/pub/ruby/2.6/ruby-2.6.3.tar.gz
-2.7.0-preview1: https://cache.ruby-lang.org/pub/ruby/2.6/ruby-2.7.0-preview1.tar.gz
+2.6.4: https://cache.ruby-lang.org/pub/ruby/2.6/ruby-2.6.4.tar.gz
+2.6.5: https://cache.ruby-lang.org/pub/ruby/2.6/ruby-2.6.5.tar.gz
+2.7.0-preview1: https://cache.ruby-lang.org/pub/ruby/2.7/ruby-2.7.0-preview1.tar.gz
+2.7.0-preview2: https://cache.ruby-lang.org/pub/ruby/2.7/ruby-2.7.0-preview2.tar.gz
+2.7.0-preview3: https://cache.ruby-lang.org/pub/ruby/2.7/ruby-2.7.0-preview3.tar.gz
+2.7.1: https://cache.ruby-lang.org/pub/ruby/2.7/ruby-2.7.1.tar.gz

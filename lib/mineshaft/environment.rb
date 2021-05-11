@@ -4,7 +4,7 @@
 # email:: cameronbtesterman@gmail.com
 # created:: 2017-04-14 1:19PM
 #
-# Copyright (c) 2017-2019 Cameron Testerman
+# Copyright (c) 2017-2021 Cameron Testerman
 
 require 'fileutils'
 require 'yaml'
@@ -17,7 +17,6 @@ module Mineshaft
     def initialize(dir, options)
       @dir = options[:global] ? File.join(Dir.home, ".mineshaft", dir) : dir
       @options = options
-      @versions = YAML.load_file(File.join(File.dirname(File.expand_path(__FILE__)), '../../versions/versions.yaml'))
       @version = @options[:version] ? @options[:version] : Mineshaft::Constants::RUBY_VERSION_STABLE
     end
 
@@ -40,9 +39,13 @@ module Mineshaft
 
     private
 
+    def build_version_url
+      "https://cache.ruby-lang.org/pub/ruby/#{@version[0..2]}/ruby-#{@version}.tar.gz"
+    end
+
     def install_ruby
       Mineshaft::Installer.new do |config|
-        config.url = @versions[@version]
+        config.url = build_version_url
         config.directory = @dir
         config.version = @version
         config.options = @options

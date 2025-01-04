@@ -3,7 +3,7 @@
 # author:: Cameron Testerman
 # email:: cameronbtesterman@gmail.com
 #
-# Copyright (c) 2017-2025 Cameron Testerman
+# © 2017 Cameron Testerman
 
 module Mineshaft
   module Date

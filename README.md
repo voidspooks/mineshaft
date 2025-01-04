@@ -86,4 +86,4 @@ rake test
 
 ## License
 
-Released under [MIT license](https://opensource.org/license/MIT).  
+Released under the [MIT license](https://opensource.org/license/MIT).  

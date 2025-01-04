@@ -88,6 +88,6 @@ rake test
 
 Cameron Testerman   --  cameronbtesterman@gmail.com
 
-Copyright Cameron Testerman
+© 2017 Cameron Testerman
 
 Released under MIT license.  

@@ -84,10 +84,6 @@ There is rake test defined to run the test suite. `rspec` ~> 3.13.0 must be inst
 rake test
 ```
 
-## Authors
+## License
 
-Cameron Testerman   --  cameronbtesterman@gmail.com
-
-© 2017 Cameron Testerman
-
-Released under MIT license.  
+Released under [MIT license](https://opensource.org/license/MIT).  

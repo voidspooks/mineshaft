@@ -21,5 +21,5 @@ Gem::Specification.new do |spec|
   spec.license                     = "MIT"
 
   spec.executables                 << "ms"
-  spec.add_development_dependency  'rspec', '~> 3.4'
+  spec.add_development_dependency  'rspec', '~> 3.13'
 end

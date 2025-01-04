@@ -11,12 +11,15 @@
 require "mineshaft"
 require "optparse"
 require "yaml"
+require "pry"
 
 options = {
   openssl_dir: "/usr/local/opt/openssl",
   version: Mineshaft::Constants::RUBY_VERSION_STABLE,
   global: false
 }
+
+info = nil
 
 parser = OptionParser.new do |opts|
   opts.banner = "Usage: ms [command] [options]"
@@ -31,24 +34,24 @@ parser = OptionParser.new do |opts|
   opts.separator ""
   opts.separator "Options"
 
-  opts.on("-v",
-    "--version",
-    "displays the current version of mineshaft") do
-      puts "Mineshaft v#{Mineshaft::VERSION}"
+  opts.on("-v", "--version", "displays the current version of mineshaft") do
+      puts "mineshaft v#{Mineshaft::VERSION}"
       exit
   end
 
-  opts.on("-o",
-    "--with-openssl-dir DIR",
-    "specify the directory where OpenSSL is installed") do |openssl_dir|
+  opts.on("-o", "--with-openssl-dir DIR", "specify the directory where OpenSSL is installed") do |openssl_dir|
       options[:openssl_dir] = openssl_dir
   end
 
-  opts.on("-n",
-    "--no-openssl-dir",
-    "do not set the OpenSSL directory - otherwise this defaults to /usr/local/opt/openssl") do |no_openssl|
+  opts.on("-n", "--no-openssl-dir", "do not set the OpenSSL directory - otherwise this defaults to /usr/local/opt/openssl") do |no_openssl|
       options[:no_openssl_dir] = true
   end
+
+  opts.on("", "", "") do
+    puts opts
+  end
+
+  info = opts
 end
 
 parser.parse!
@@ -80,5 +83,5 @@ when "use"
   options[:global] = true
   Mineshaft.use(name, options)
 else
-  puts "Unrecognized command - #{ARGV[0]}" 
+  info.help
 end

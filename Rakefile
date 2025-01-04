@@ -16,7 +16,7 @@ task :install do
   %x{ gem install ./mineshaft-*.gem }
 end
 
-task :getversions do
+task :versions do
   rubyrepo = URI.parse("http://cache.ruby-lang.org/pub/ruby/")
   request = Net::HTTP::Get.new(rubyrepo.to_s)
   response = Net::HTTP.start(rubyrepo.host, rubyrepo.port) do |http|
@@ -34,4 +34,4 @@ end
 
 task :default => :spec
 task :test    => :spec
-task :reload  => [ :build, :install ]
+task :cycle  => [ :build, :install ]

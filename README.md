@@ -1,4 +1,4 @@
-# Mineshaft
+# mineshaft
 Inspired by PyPA's Virtualenv, Mineshaft allows for the creation of isolated Ruby virtual environments. It aims to simplify the process of installing and using multiple versions of Ruby.
 
 ## Installation

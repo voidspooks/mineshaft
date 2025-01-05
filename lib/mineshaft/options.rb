@@ -26,12 +26,17 @@
 module Mineshaft
   class Options
     def initialize
-      @commands = Mineshaft::Commands
-      @logger = Mineshaft::Logger
+      @parser = parser
     end
 
-    def parse!
-      parser = OptionParser.new do |opts|
+    def parse!      
+      @parser.parse!
+    end
+
+    private
+
+    def parser
+      OptionParser.new do |opts|
         opts.banner = 'Usage: ms [command] [options]'
         opts.separator ''
         opts.separator 'Commands'
@@ -46,22 +51,20 @@ module Mineshaft
         opts.separator 'Options'
       
         opts.on('-v', '--verbose', 'provides more output from mineshaft, helpful in debugging') do
-          @logger.verbose = true
+          LOGGER.verbose = true
         end
       
         opts.on('-o', '--with-openssl-dir DIR', 'specify the directory where OpenSSL is installed') do |openssl_dir|
-          @commands.options[:openssl_dir] = openssl_dir
+          COMMANDS.options[:openssl_dir] = openssl_dir
         end
       
         opts.on('-n', '--no-openssl-dir',
                 'do not set the OpenSSL directory - otherwise this defaults to /usr/local/opt/openssl') do |_no_openssl|
-          @commands.options[:no_openssl_dir] = true
+          COMMANDS.options[:no_openssl_dir] = true
         end
       
-        @commands.help = opts.help
+        COMMANDS.help = opts.help
       end
-      
-      parser.parse!
     end
   end
 end

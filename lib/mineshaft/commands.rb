@@ -90,7 +90,7 @@ module Mineshaft
         options[:version] = ARGV[1] if ARGV[1]
         name = options[:version]
       else
-        name = RUBY_VERSION
+        name = Mineshaft::RubyVersions.latest_stable
       end
     
       COMMANDS.new(name:)

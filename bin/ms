@@ -33,37 +33,11 @@ LOGGER = Mineshaft::Logger
 VERSION = Mineshaft::Version.current
 COMMANDS = Mineshaft::Commands
 RUBY_VERSION = Mineshaft::RubyVersions.latest_stable
+OPTIONS = Mineshaft::Options.new
 
-parser = OptionParser.new do |opts|
-  opts.banner = 'Usage: ms [command] [options]'
-  opts.separator ''
-  opts.separator 'Commands'
-  opts.separator '    env                              shows a list of all installed global Rubies, with the current one in use highlighted'
-  opts.separator '    install                          installs a new global Ruby'
-  opts.separator '    list                             lists the ten latest versions of Ruby available to install'
-  opts.separator '    new                              creates new environment'
-  opts.separator '    reload                           reloads binaries using the current global Ruby version'
-  opts.separator '    use                              selects an installed global Ruby environment to use'
-  opts.separator '    version                          displays the current version of mineshaft'
-  opts.separator ''
-  opts.separator 'Options'
+OPTIONS.parse!
 
-  opts.on('-v', '--verbose', 'provides more output from mineshaft, helpful in debugging') do
-    LOGGER.verbose = true
-  end
+COMMANDS.help if ARGV.empty?
+exit if ARGV.empty?
 
-  opts.on('-o', '--with-openssl-dir DIR', 'specify the directory where OpenSSL is installed') do |openssl_dir|
-    COMMANDS.options[:openssl_dir] = openssl_dir
-  end
-
-  opts.on('-n', '--no-openssl-dir',
-          'do not set the OpenSSL directory - otherwise this defaults to /usr/local/opt/openssl') do |_no_openssl|
-    COMMANDS.options[:no_openssl_dir] = true
-  end
-
-  COMMANDS.help = opts.help
-end
-
-parser.parse!
-
-ARGV.empty? ? COMMANDS.help : COMMANDS.send(ARGV[0]) if COMMANDS.respond_to?(ARGV[0])
+COMMANDS.send(ARGV[0]) if COMMANDS.respond_to?(ARGV[0])

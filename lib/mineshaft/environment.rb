@@ -111,7 +111,7 @@ module Mineshaft
       @logger.log "Checking if #{profile} exists.", level: :debug
       return unless File.exist?(profile)
 
-      @logger.log "Profile exists!" level: :debug
+      @logger.log "Profile exists!", level: :debug
       mineshaft_path_not_set = File.readlines(profile).grep(/mineshaft/).length == 0
 
       @logger.log "mineshaft_path_not_set: #{mineshaft_path_not_set}", level: :debug

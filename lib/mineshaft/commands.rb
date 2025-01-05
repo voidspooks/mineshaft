@@ -58,7 +58,7 @@ module Mineshaft
       FileUtils::ln_s binary_absolute, "#{Dir.home}/.mineshaft/bin/#{binary}" 
     end
 
-    puts "Binaries successfully reloaded!"
+    puts "💫 Binaries successfully reloaded!"
   end
 
   def self.list

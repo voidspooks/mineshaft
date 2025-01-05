@@ -66,23 +66,4 @@ end
 
 parser.parse!
 
-## Various commands - all represented as methods
-
-case ARGV[0]
-when 'install'
-  COMMANDS.install
-when 'env'
-  COMMANDS.env
-when 'list'
-  COMMANDS.list
-when 'new'
-  COMMANDS.new_env
-when 'reload'
-  COMMANDS.reload
-when 'use'
-  COMMANDS.use
-when 'version'
-  COMMANDS.version
-else
-  COMMANDS.help
-end
+ARGV.empty? ? COMMANDS.help : COMMANDS.send(ARGV[0]) if COMMANDS.respond_to?(ARGV[0])

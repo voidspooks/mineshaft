@@ -93,14 +93,14 @@ module Mineshaft
         name = RUBY_VERSION
       end
     
-      COMMANDS.new_env(name:)
+      COMMANDS.new(name:)
     end
   
     def self.environment(name, options)
       Mineshaft::Environment.new(name, options)
     end
   
-    def self.new_env(name: nil)
+    def self.new(name: nil)
       if name.nil?
         name = ARGV[ARGV.index('new') + 1]
       end

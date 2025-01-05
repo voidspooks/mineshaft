@@ -32,6 +32,29 @@ task :versions do
     end
 end
 
+task :reset do
+  if File.exist? "~/.mineshaft"
+    %x{ rm -rf ~/.mineshaft }
+    puts "Deleted ~/.mineshaft"
+  else
+    puts "~/.mineshaft does not exist. No changes made."
+  end
+
+  file_path = File.expand_path('~/.zshrc')
+  lines = File.readlines(file_path)
+
+  if lines.last.strip == "PATH=/Users/voidspooks/.mineshaft/bin:$PATH"
+    lines.pop
+
+    File.open(file_path, 'w') do |file|
+      file.puts(lines)
+    end
+    puts "Removed 'PATH=/Users/voidspooks/.mineshaft/bin:$PATH' from ~/.zshrc"
+  else
+    puts "Last line did not match. No changes made."
+  end
+end
+
 task :test    => :spec
 task :cycle  => [ :build, :install ]
 task :default => :cycle

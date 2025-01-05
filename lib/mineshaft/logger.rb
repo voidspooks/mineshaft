@@ -2,7 +2,7 @@
 #
 # author:: Cameron Testerman
 # email:: cameronbtesterman@gmail.com
-# created:: 2017-04-14 1:19PM
+# created:: 2025-01-05 2:14PM
 #
 
 # Copyright (c) 2017 Cameron Testerman
@@ -24,10 +24,16 @@
 # ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 
-require "mineshaft/constants"
-require "mineshaft/logger"
-require "mineshaft/environment"
-require "mineshaft/installer"
-require "mineshaft/version"
-require "mineshaft/ruby_versions"
-require "mineshaft/commands"
+module Mineshaft
+  class Logger
+    @@verbose = false
+
+    def self.log(message, level: :info)
+      if @@verbose && level == :debug
+        puts message 
+      elsif level == :info
+        puts message
+      end
+    end
+  end
+end

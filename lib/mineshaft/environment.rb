@@ -36,6 +36,7 @@ module Mineshaft
       @dir = options[:global] ? File.join(Dir.home, ".mineshaft", dir) : dir
       @options = options
       @version = @options[:version] ? @options[:version] : Mineshaft::Constants::RUBY_VERSION_STABLE
+      @logger = Mineshaft::Logger
     end
 
     def create
@@ -107,13 +108,16 @@ module Mineshaft
     end
 
     def modify_shell_profile(profile)
-      puts "modifying #{profile}" unless @options[:verbose]
+      @logger.log "Checking if #{profile} exists.", level: :debug
       return unless File.exist?(profile)
-      puts "profile exists" unless @options[:verbose]
+
+      @logger.log "Profile exists!" level: :debug
       mineshaft_path_not_set = File.readlines(profile).grep(/mineshaft/).length == 0
-      puts "mineshaft_path_not_set: #{mineshaft_path_not_set}" unless @options[:verbose]
+
+      @logger.log "mineshaft_path_not_set: #{mineshaft_path_not_set}", level: :debug
       open(profile, 'a') { |f| f.puts("PATH=#{Dir.home}/.mineshaft/bin:$PATH") } if mineshaft_path_not_set
-      puts "profile modified!" unless @options[:verbose]
+
+      @logger.log "Profile modified!", level: :debug
     end
   end
 end

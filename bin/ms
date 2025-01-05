@@ -32,8 +32,10 @@ require "optparse"
 require "yaml"
 require "pry"
 
+logger = Mineshaft::Logger.new
+
 options = {
-  openssl_dir: "/usr/local/opt/openssl",
+  openssl_dir: "/opt/homebrew/opt/openssl",
   version: Mineshaft::RubyVersions.latest_stable,
   global: false,
   verbose: false
@@ -101,7 +103,7 @@ when "use"
   options[:global] = true
   Mineshaft.use(name, options)
 when "version"
-  puts "mineshaft v#{Mineshaft::Version.current}"
+  logger.log "mineshaft v#{Mineshaft::Version.current}"
 else
-  puts help
+  logger.log help
 end

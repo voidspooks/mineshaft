@@ -6,17 +6,17 @@ RSpec.describe Mineshaft::Installer do
   describe '#run' do
     context 'with valid configuration' do
       let(:latest_stable) { Mineshaft::RubyVersions.latest_stable }
-      let(:dir) { 'test_dir'}
+      let(:dir) { 'test_dir' }
       let(:options) do
         {
-          openssl_dir: "/usr/local/opt/openssl",
+          openssl_dir: '/usr/local/opt/openssl',
           version: latest_stable,
           global: false
         }
       end
 
       before do
-        FileUtils::mkdir_p(dir)
+        FileUtils.mkdir_p(dir)
         Mineshaft::Installer.new do |config|
           config.url       = Mineshaft::RubyVersions.urlize(latest_stable)
           config.directory = dir

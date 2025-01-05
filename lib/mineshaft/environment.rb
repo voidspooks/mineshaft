@@ -4,7 +4,6 @@
 # email:: cameronbtesterman@gmail.com
 # created:: 2017-04-14 1:19PM
 
-
 # Copyright (c) 2017 Cameron Testerman
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy of this software
@@ -33,19 +32,19 @@ module Mineshaft
     attr_reader :dir
 
     def initialize(dir, options)
-      @dir = options[:global] ? File.join(Dir.home, ".mineshaft", dir) : dir
+      @dir = options[:global] ? File.join(Dir.home, '.mineshaft', dir) : dir
       @options = options
-      @version = @options[:version] ? @options[:version] : Mineshaft::Constants::RUBY_VERSION_STABLE
+      @version = @options[:version] || Mineshaft::RubyVersions::LATEST_STABLE
       @logger = Mineshaft::Logger
     end
 
     def create
-      FileUtils::mkdir_p(@dir)
+      FileUtils.mkdir_p(@dir)
       install_ruby
       if @options[:global]
         set_new_global
         `gem install mineshaft`
-        Mineshaft.reload
+        Mineshaft::Commands.reload
       else
         create_activate_script
       end
@@ -53,7 +52,7 @@ module Mineshaft
 
     def use
       set_new_global
-      puts "Now using the environment at: #@dir"
+      @logger.log "Now using the environment at: #{@dir}"
     end
 
     private
@@ -90,8 +89,8 @@ module Mineshaft
     end
 
     def set_new_global
-      if Dir["#{@dir}/bin/*"].length == 0
-        puts "#@dir is not a valid environment - exiting" 
+      if Dir["#{@dir}/bin/*"].empty?
+        @logger.log "#{@dir} is not a valid environment - exiting"
         exit
       end
 
@@ -102,8 +101,8 @@ module Mineshaft
         .each { |profile| modify_shell_profile(profile) }
 
       Dir["#{@dir}/bin/*"].each do |binary_absolute|
-        binary = binary_absolute.split("/").last
-        FileUtils::ln_s binary_absolute, "#{Dir.home}/.mineshaft/bin/#{binary}" 
+        binary = binary_absolute.split('/').last
+        FileUtils.ln_s binary_absolute, "#{Dir.home}/.mineshaft/bin/#{binary}"
       end
     end
 
@@ -111,13 +110,13 @@ module Mineshaft
       @logger.log "Checking if #{profile} exists.", level: :debug
       return unless File.exist?(profile)
 
-      @logger.log "Profile exists!", level: :debug
-      mineshaft_path_not_set = File.readlines(profile).grep(/mineshaft/).length == 0
+      @logger.log 'Profile exists!', level: :debug
+      mineshaft_path_not_set = File.readlines(profile).grep(/mineshaft/).empty?
 
       @logger.log "mineshaft_path_not_set: #{mineshaft_path_not_set}", level: :debug
       open(profile, 'a') { |f| f.puts("PATH=#{Dir.home}/.mineshaft/bin:$PATH") } if mineshaft_path_not_set
 
-      @logger.log "Profile modified!", level: :debug
+      @logger.log 'Profile modified!', level: :debug
     end
   end
 end

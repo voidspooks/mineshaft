@@ -25,7 +25,7 @@
 
 module Mineshaft
   module RubyVersions
-    LATEST_STABLE = "3.4.1"
+    LATEST_STABLE = '3.4.1'
 
     def self.latest_stable
       LATEST_STABLE

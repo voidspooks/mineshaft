@@ -4,7 +4,6 @@
 # email:: cameronbtesterman@gmail.com
 # created:: 2017-04-14 1:19PM
 
-
 # Copyright (c) 2017 Cameron Testerman
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy of this software
@@ -26,7 +25,7 @@
 
 module Mineshaft
   module Version
-    CURRENT = "5.1.0"
+    CURRENT = '5.1.0'
 
     def self.current
       CURRENT

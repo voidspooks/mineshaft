@@ -1,12 +1,9 @@
 #!/usr/bin/ruby
 # frozen_string_literal: true
-#
-# mineshaft
-#
+
 # author:: Cameron Testerman
 # email:: cameronbtesterman@gmail.com
 # created:: 2017-04-14 1:19PM
-#
 
 # Copyright (c) 2017 Cameron Testerman
 #
@@ -27,83 +24,65 @@
 # ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 
-require "mineshaft"
-require "optparse"
-require "yaml"
-require "pry"
+require 'mineshaft'
+require 'optparse'
+require 'yaml'
+require 'pry'
 
-logger = Mineshaft::Logger
-
-options = {
-  openssl_dir: "/opt/homebrew/opt/openssl",
-  version: Mineshaft::RubyVersions.latest_stable,
-  global: false,
-  verbose: false
-}
-
-help = nil
+LOGGER = Mineshaft::Logger
+VERSION = Mineshaft::Version.current
+COMMANDS = Mineshaft::Commands
+RUBY_VERSION = Mineshaft::RubyVersions.latest_stable
 
 parser = OptionParser.new do |opts|
-  opts.banner = "Usage: ms [command] [options]"
-  opts.separator ""
-  opts.separator "Commands"
-  opts.separator "    env                              shows a list of all installed global Rubies, with the current one in use highlighted"
-  opts.separator "    install                          installs a new global Ruby"
-  opts.separator "    list                             lists the ten latest versions of Ruby available to install"
-  opts.separator "    new                              creates new environment"
-  opts.separator "    reload                           reloads binaries using the current global Ruby version"
-  opts.separator "    use                              selects an installed global Ruby environment to use"
-  opts.separator "    version                          displays the current version of mineshaft"
-  opts.separator ""
-  opts.separator "Options"
+  opts.banner = 'Usage: ms [command] [options]'
+  opts.separator ''
+  opts.separator 'Commands'
+  opts.separator '    env                              shows a list of all installed global Rubies, with the current one in use highlighted'
+  opts.separator '    install                          installs a new global Ruby'
+  opts.separator '    list                             lists the ten latest versions of Ruby available to install'
+  opts.separator '    new                              creates new environment'
+  opts.separator '    reload                           reloads binaries using the current global Ruby version'
+  opts.separator '    use                              selects an installed global Ruby environment to use'
+  opts.separator '    version                          displays the current version of mineshaft'
+  opts.separator ''
+  opts.separator 'Options'
 
-  opts.on("-v", "--verbose", "provides more output from mineshaft, helpful in debugging") do
-    options[:verbose] = true
+  opts.on('-v', '--verbose', 'provides more output from mineshaft, helpful in debugging') do
+    LOGGER.verbose = true
   end
 
-  opts.on("")
-
-  opts.on("-o", "--with-openssl-dir DIR", "specify the directory where OpenSSL is installed") do |openssl_dir|
-      options[:openssl_dir] = openssl_dir
+  opts.on('-o', '--with-openssl-dir DIR', 'specify the directory where OpenSSL is installed') do |openssl_dir|
+    COMMANDS.options[:openssl_dir] = openssl_dir
   end
 
-  opts.on("-n", "--no-openssl-dir", "do not set the OpenSSL directory - otherwise this defaults to /usr/local/opt/openssl") do |no_openssl|
-      options[:no_openssl_dir] = true
+  opts.on('-n', '--no-openssl-dir',
+          'do not set the OpenSSL directory - otherwise this defaults to /usr/local/opt/openssl') do |_no_openssl|
+    COMMANDS.options[:no_openssl_dir] = true
   end
 
-  help = opts.help
+  COMMANDS.help = opts.help
 end
 
 parser.parse!
 
+## Various commands - all represented as methods
+
 case ARGV[0]
-when "env"
-  Mineshaft.env
-when "install"
-  options[:global] = true
-
-  if ARGV[1]
-    options[:version] = ARGV[1] if ARGV[1]
-    name = options[:version]
-  else
-    name = Mineshaft::RubyVersions.latest_stable
-  end
-
-  Mineshaft.new(name, options)
-when "list"
-  Mineshaft.list
-when "new"
-  name = ARGV[ARGV.index("new") + 1]
-  options[:version] = ARGV[2] if ARGV[2]
-  Mineshaft.new(name, options)
-when "reload"
-  Mineshaft.reload
-when "use"
-  name = ARGV[ARGV.index("use") + 1]
-  options[:global] = true
-  Mineshaft.use(name, options)
-when "version"
-  logger.log "mineshaft v#{Mineshaft::Version.current}"
+when 'install'
+  COMMANDS.install
+when 'env'
+  COMMANDS.env
+when 'list'
+  COMMANDS.list
+when 'new'
+  COMMANDS.new_env
+when 'reload'
+  COMMANDS.reload
+when 'use'
+  COMMANDS.use
+when 'version'
+  COMMANDS.version
 else
-  logger.log help
+  COMMANDS.help
 end

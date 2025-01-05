@@ -25,7 +25,7 @@
 
 module Mineshaft
   module Constants
-    GLOBAL_DIR = "#{Dir.home}/.mineshaft"
-    GLOBAL_BIN = "#{GLOBAL_DIR}/bin"
+    GLOBAL_DIR = "#{Dir.home}/.mineshaft".freeze
+    GLOBAL_BIN = "#{GLOBAL_DIR}/bin".freeze
   end
 end

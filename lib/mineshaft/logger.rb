@@ -4,7 +4,6 @@
 # email:: cameronbtesterman@gmail.com
 # created:: 2025-01-05 2:14PM
 
-
 # Copyright (c) 2017 Cameron Testerman
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy of this software
@@ -26,11 +25,23 @@
 
 module Mineshaft
   class Logger
-    @@verbose = false
+    @verbose = false
+
+    def self.verbose
+      @verbose
+    end
+
+    def self.verbose=(value)
+      @verbose = value
+    end
+
+    def verbose
+      self.class.verbose
+    end
 
     def self.log(message, level: :info)
-      if @@verbose && level == :debug
-        puts message 
+      if @verbose && level == :debug
+        puts message
       elsif level == :info
         puts message
       end

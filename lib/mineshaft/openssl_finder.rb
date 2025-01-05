@@ -4,7 +4,6 @@
 # email:: cameronbtesterman@gmail.com
 # created:: 2025-01-05 2:30PM
 
-
 # Copyright (c) 2017 Cameron Testerman
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy of this software

@@ -7,7 +7,7 @@ RSpec.describe Mineshaft::Environment do
     context 'with valid configuration' do
       let(:options) do
         {
-          openssl_dir: "/usr/local/opt/openssl",
+          openssl_dir: '/usr/local/opt/openssl',
           version: Mineshaft::RubyVersions.latest_stable,
           global: false
         }
@@ -15,7 +15,7 @@ RSpec.describe Mineshaft::Environment do
       let(:version) { Mineshaft::RubyVersions.latest_stable }
       let(:environment) { Mineshaft::Environment.new(version, options) }
 
-      it 'can create virtual environment using the latest stable version of Ruby'  do
+      it 'can create virtual environment using the latest stable version of Ruby' do
         environment.create
         expect(File.exist?("#{version}/bin/ruby")).to eq true
         FileUtils.rm_rf(version)

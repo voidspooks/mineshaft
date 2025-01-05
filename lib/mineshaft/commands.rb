@@ -26,50 +26,123 @@
 require 'yaml'
 
 module Mineshaft
-  def self.env
-    rubies = Dir["#{Mineshaft::Constants::GLOBAL_DIR}/*"]
-    rubies.delete Mineshaft::Constants::GLOBAL_BIN
+  class Commands
+    AVAILABLE_COMMANDS = [
+      'env',
+      'install',
+      'environment',
+      'new_env',
+      'use',
+      'reload',
+      'list',
+      'version',
+      'help'
+    ]
 
-    puts "Globally installed Ruby versions"
-    puts "--------------------------------"
-    rubies.each { |ruby| puts ruby.split("/").last }
-  end
+    @options = {
+      openssl_dir: '/opt/homebrew/opt/openssl',
+      version: RUBY_VERSION,
+      global: false,
+      verbose: false
+    }
 
-  def self.environment(name, options)
-    Mineshaft::Environment.new(name, options)
-  end
+    @logger = Mineshaft::Logger
 
-  def self.new(name, options)
-    environment(name, options).create
-  end
-
-  def self.use(name, options)
-    environment(name, options).use
-  end
-
-  def self.reload
-    ruby = File.readlink("#{Dir.home}/.mineshaft/bin/ruby").split('/')
-    bin_dir = ruby.shift(ruby.length - 1).join("/")
-    FileUtils.rm Dir.glob("#{Dir.home}/.mineshaft/bin/*")
-
-    Dir["#{bin_dir}/*"].each do |binary_absolute|
-      binary = binary_absolute.split("/").last
-      FileUtils::ln_s binary_absolute, "#{Dir.home}/.mineshaft/bin/#{binary}" 
+    def self.options
+      @options
+    end
+  
+    def self.options=(value)
+      @options = value
     end
 
-    puts "💫 Binaries successfully reloaded!"
-  end
-
-  def self.list
-    versions = YAML.load_file(File.join(File.dirname(File.expand_path(__FILE__)), '../../versions/versions.yaml'))
-    last_ten = []
-
-    Hash[versions.sort_by {|k, v| -v }[versions.length - 10..versions.length]].each do |version, url|
-      last_ten.push(version)
+    def options
+      self.class.options
     end
 
-    puts "Latest 10 Ruby versions available for download"
-    puts "----------------------------------------------"
-    last_ten.reverse.each {|ver| puts ver}
+    @help = nil
+
+    def self.help
+      @logger.log @help
+    end
+
+    def self.help=(value)
+      @help = value
+    end
+
+    def help
+      self.class.help
+    end
+
+    def self.env
+      rubies = Dir["#{Mineshaft::Constants::GLOBAL_DIR}/*"]
+      rubies.delete Mineshaft::Constants::GLOBAL_BIN
+  
+      puts 'Globally installed Ruby versions'
+      puts '--------------------------------'
+      rubies.each { |ruby| puts ruby.split('/').last }
+    end
+
+    def self.install
+      options[:global] = true
+    
+      if ARGV[1]
+        options[:version] = ARGV[1] if ARGV[1]
+        name = options[:version]
+      else
+        name = RUBY_VERSION
+      end
+    
+      COMMANDS.new_env(name:)
+    end
+  
+    def self.environment(name, options)
+      Mineshaft::Environment.new(name, options)
+    end
+  
+    def self.new_env(name: nil)
+      if name.nil?
+        name = ARGV[ARGV.index('new') + 1]
+      end
+      
+      options[:version] = ARGV[2] if ARGV[2]
+      environment(name, options).create
+    end
+  
+    def self.use
+      name = ARGV[ARGV.index('use') + 1]
+      options[:global] = true
+      environment(name, options).use
+    end
+  
+    def self.reload
+      ruby = File.readlink("#{Dir.home}/.mineshaft/bin/ruby").split('/')
+      bin_dir = ruby.shift(ruby.length - 1).join('/')
+      FileUtils.rm Dir.glob("#{Dir.home}/.mineshaft/bin/*")
+  
+      Dir["#{bin_dir}/*"].each do |binary_absolute|
+        binary = binary_absolute.split('/').last
+        FileUtils.ln_s binary_absolute, "#{Dir.home}/.mineshaft/bin/#{binary}"
+      end
+  
+      puts '💫 Binaries successfully reloaded!'
+    end
+  
+    def self.list
+      versions = YAML.load_file(File.join(File.dirname(File.expand_path(__FILE__)), '../../versions/versions.yaml'))
+      last_ten = []
+  
+      Hash[versions.sort_by { |_k, v| -v }[versions.length - 10..versions.length]].each_key do |version|
+        last_ten.push(version)
+      end
+  
+      puts 'Latest 10 Ruby versions available for download'
+      puts '----------------------------------------------'
+      last_ten.reverse.each { |ver| puts ver }
+    end
+
+    def self.version
+      @logger.log "mineshaft v#{Mineshaft::Version.current}"
+    end
   end
 end

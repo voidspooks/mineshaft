@@ -4,7 +4,6 @@
 # email:: cameronbtesterman@gmail.com
 # created:: 2017-04-14 1:19PM
 
-
 # Copyright (c) 2017 Cameron Testerman
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy of this software
@@ -37,7 +36,8 @@ module Mineshaft
     include Mineshaft::Shell
 
     def initialize
-      @ruby_archive = "ruby.tar.gz"
+      @ruby_archive = 'ruby.tar.gz'
+      @logger = Mineshaft::Logger
       yield self
     end
 
@@ -51,12 +51,13 @@ module Mineshaft
 
     def find_slash_indices(url)
       slash_array = []
-      url = url.split("")
+      url = url.split('')
       i = 0
 
       url.each do |l|
         break if slash_array.length == 3
-        slash_array.push(i) if l == "/"
+
+        slash_array.push(i) if l == '/'
         i += 1
       end
 
@@ -75,39 +76,39 @@ module Mineshaft
     end
 
     def download(url, download_dir)
-      puts "🪄  Downloading Ruby #@version..."
+      @logger.log "🪄  Downloading Ruby #{@version}..."
       split_url(url) do |site, file|
         Net::HTTP.start(site) do |http|
           response = http.get(file)
-          open("#{download_dir}/#@ruby_archive", "w") do |f|
+          open("#{download_dir}/#{@ruby_archive}", 'w') do |f|
             f.write(response.body)
           end
         end
       end
-      puts "🎉 Ruby #@version successfully downloaded!"
+      @logger.log "🎉 Ruby #{@version} successfully downloaded!"
     end
 
     def unzip(dir)
-      FileUtils::mkdir_p("#{dir}/ruby-#@version")
-      tar_extract = Gem::Package::TarReader.new(Zlib::GzipReader.open("#{dir}/#@ruby_archive"))
+      FileUtils.mkdir_p("#{dir}/ruby-#{@version}")
+      tar_extract = Gem::Package::TarReader.new(Zlib::GzipReader.open("#{dir}/#{@ruby_archive}"))
       tar_extract.rewind
-      puts "🗃️  Unzipping archive..."
+      @logger.log '🗃️  Unzipping archive...'
       tar_extract.each do |entry|
         if entry.full_name.split('').last == '/'
-          puts "extracted dir: #{dir}/#{entry.full_name}" if @options[:verbose]
-          FileUtils::mkdir_p("#{dir}/#{entry.full_name}")
+          @logger.log "extracted dir: #{dir}/#{entry.full_name}", level: :debug
+          FileUtils.mkdir_p("#{dir}/#{entry.full_name}")
         elsif entry.file?
-          puts "extracted file: #{dir}/#{entry.full_name}" if @options[:verbose]
-          File.open("#{dir}/#{entry.full_name}", 'w') {|file| file.write(entry.read)}
+          @logger.log "extracted file: #{dir}/#{entry.full_name}", level: :debug
+          File.open("#{dir}/#{entry.full_name}", 'w') { |file| file.write(entry.read) }
         end
       end
-      puts "🥳 Archive successfully unzipped!"
+      @logger.log '🥳 Archive successfully unzipped!'
       tar_extract.close
     end
 
-    def configure_options(prefix)
+    def configure_options(_prefix)
       config = @global ? "./configure --prefix #{@directory}" : "./configure --prefix #{File.expand_path(@directory)}"
-      config << " > /dev/null 2>&1" unless @options[:verbose]
+      config << ' > /dev/null 2>&1' unless @options[:verbose]
 
       if @options[:no_openssl_dir]
         config
@@ -115,33 +116,33 @@ module Mineshaft
         config << " --with-openssl-dir=#{@options[:openssl_dir]}"
       end
 
-      return config
+      config
     end
 
     def build(prefix)
-      puts "🏗️  Building Ruby... (this will take some time)"
-      puts "Directory is #{@directory}" if @options[:verbose]
-      puts @options[:no_openssl_dir] if @options[:verbose]
-      directory = "#{@directory}/ruby-#@version"
+      @logger.log '🏗️  Building Ruby... (this will take some time)'
+      @logger.log "Directory is #{@directory}", level: :debug
+      @logger.log @options[:no_openssl_dir], level: :debug
+      directory = "#{@directory}/ruby-#{@version}"
 
       commands = if @options[:verbose]
-        [
-          "chmod +x configure tool/ifchange",
-          configure_options(prefix),
-          "make",
-          "make install"
-        ]
-      else
-        [
-          "chmod +x configure tool/ifchange",
-          configure_options(prefix),
-          "make > /dev/null 2>&1",
-          "make install > /dev/null 2>&1"
-        ]
-      end
+                   [
+                     'chmod +x configure tool/ifchange',
+                     configure_options(prefix),
+                     'make',
+                     'make install'
+                   ]
+                 else
+                   [
+                     'chmod +x configure tool/ifchange',
+                     configure_options(prefix),
+                     'make > /dev/null 2>&1',
+                     'make install > /dev/null 2>&1'
+                   ]
+                 end
 
-      commands.each { |command| shell(directory:, commands: command, verbose: @options[:verbose]) }
-      puts "✨ Ruby environment was successfully built!"
+      commands.each { |command| shell(directory:, commands: command) }
+      @logger.log '✨ Ruby environment was successfully built!'
     end
   end
 end

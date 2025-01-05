@@ -25,9 +25,9 @@
 
 module Mineshaft
   module Shell
-    def shell(directory:, commands:, verbose: false)
-      puts "Running cd #{directory} && #{commands}" if verbose
-      %x{ cd #{directory} && #{commands} }
+    def shell(directory:, commands:)
+      @logger.log "Running cd #{directory} && #{commands}", level: :debug
+      `cd #{directory} && #{commands}`
     end
   end
 end

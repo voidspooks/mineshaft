@@ -4,7 +4,6 @@
 # email:: cameronbtesterman@gmail.com
 # created:: 2017-04-14 1:19PM
 
-
 # Copyright (c) 2017 Cameron Testerman
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy of this software
@@ -24,10 +23,11 @@
 # ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 
-require "mineshaft/constants"
-require "mineshaft/logger"
-require "mineshaft/environment"
-require "mineshaft/installer"
-require "mineshaft/version"
-require "mineshaft/ruby_versions"
-require "mineshaft/commands"
+require 'mineshaft/constants'
+require 'mineshaft/logger'
+require 'mineshaft/date'
+require 'mineshaft/environment'
+require 'mineshaft/installer'
+require 'mineshaft/version'
+require 'mineshaft/ruby_versions'
+require 'mineshaft/commands'

@@ -3,49 +3,49 @@
 require 'rspec/core/rake_task'
 require 'bundler/gem_tasks'
 require 'net/http'
+require 'pry'
 
 RSpec::Core::RakeTask.new(:spec) do |task|
   task.rspec_opts = ['--color']
 end
 
 task :build do
-  %x{ rm mineshaft-*.gem }
-  %x{ gem build mineshaft.gemspec }
+  `rm mineshaft-*.gem`
+  `gem build mineshaft.gemspec`
 end
 
 task :install do
-  %x{ yes | gem uninstall mineshaft }
-  %x{ gem install ./mineshaft-*.gem }
+  `yes | gem uninstall mineshaft`
+  `gem install ./mineshaft-*.gem`
 end
 
 task :versions do
-  rubyrepo = URI.parse("http://cache.ruby-lang.org/pub/ruby/")
+  rubyrepo = URI.parse('http://cache.ruby-lang.org/pub/ruby/')
   request = Net::HTTP::Get.new(rubyrepo.to_s)
   response = Net::HTTP.start(rubyrepo.host, rubyrepo.port) do |http|
     http.request(request)
-  end 
+  end
   response
     .body
-    .split(" ")
+    .split(' ')
     .each do |directory|
-      if directory.include?("href") and !directory.include?("zip") and !directory.include?("tar")
-        puts directory
-      end
+      puts directory if directory.include?('href') && !directory.include?('zip') && !directory.include?('tar')
     end
 end
 
 task :reset do
-  if File.exist? "~/.mineshaft"
-    %x{ rm -rf ~/.mineshaft }
-    puts "Deleted ~/.mineshaft"
+  mineshaft_directory = File.expand_path('~/.mineshaft')
+  if File.exist? mineshaft_directory
+    `rm -rf #{mineshaft_directory}`
+    puts "Deleted #{mineshaft_directory} and its contents."
   else
-    puts "~/.mineshaft does not exist. No changes made."
+    puts "#{mineshaft_directory} does not exist. No changes made."
   end
 
   file_path = File.expand_path('~/.zshrc')
   lines = File.readlines(file_path)
 
-  if lines.last.strip == "PATH=/Users/voidspooks/.mineshaft/bin:$PATH"
+  if lines.last.strip == 'PATH=/Users/voidspooks/.mineshaft/bin:$PATH'
     lines.pop
 
     File.open(file_path, 'w') do |file|
@@ -53,10 +53,10 @@ task :reset do
     end
     puts "Removed 'PATH=/Users/voidspooks/.mineshaft/bin:$PATH' from ~/.zshrc"
   else
-    puts "Last line did not match. No changes made."
+    puts 'Last line did not match. No changes made.'
   end
 end
 
-task :test    => :spec
-task :cycle   => [ :build, :install ]
-task :default => :cycle
+task test: :spec
+task cycle: %i[reset build install]
+task default: :cycle

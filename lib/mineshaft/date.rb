@@ -1,8 +1,7 @@
-# mineshaft
-#
+# frozen_string_literal: true
+
 # author:: Cameron Testerman
 # email:: cameronbtesterman@gmail.com
-#
 
 # Copyright (c) 2017 Cameron Testerman
 #

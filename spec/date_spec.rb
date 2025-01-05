@@ -1,5 +1,6 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
-require 'mineshaft/date'
 
 RSpec.describe Mineshaft::Date do
   it "should prepend zero to number" do

@@ -1,9 +1,8 @@
 # frozen_string_literal: true
-#
+
 # author:: Cameron Testerman
 # email:: cameronbtesterman@gmail.com
 # created:: 2018-07-02 9:27PM
-#
 
 # Copyright (c) 2017 Cameron Testerman
 #

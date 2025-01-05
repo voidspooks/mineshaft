@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rspec/core/rake_task'
 require 'bundler/gem_tasks'
 require 'net/http'
@@ -56,5 +58,5 @@ task :reset do
 end
 
 task :test    => :spec
-task :cycle  => [ :build, :install ]
+task :cycle   => [ :build, :install ]
 task :default => :cycle

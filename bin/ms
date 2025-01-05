@@ -32,7 +32,7 @@ require "optparse"
 require "yaml"
 require "pry"
 
-logger = Mineshaft::Logger.new
+logger = Mineshaft::Logger
 
 options = {
   openssl_dir: "/opt/homebrew/opt/openssl",

@@ -33,7 +33,7 @@ PLATFORMS
 DEPENDENCIES
   mineshaft!
   pry
-  rspec (~> 3.13)
+  rspec
 
 BUNDLED WITH
    2.6.2

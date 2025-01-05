@@ -1,8 +1,8 @@
-# mineshaft
+# frozen_string_literal: true
 #
 # author:: Cameron Testerman
 # email:: cameronbtesterman@gmail.com
-# created:: 2017-10-23 7:01PM
+# created:: 2025-01-04 12:09AM
 #
 
 # Copyright (c) 2017 Cameron Testerman
@@ -25,10 +25,15 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 
 module Mineshaft
-  module Shell
-    def shell(directory:, commands:, verbose: false)
-      puts "Running cd #{directory} && #{commands}" if verbose
-      %x{ cd #{directory} && #{commands} }
+  module RubyVersions
+    LATEST_STABLE = "3.4.1"
+
+    def self.latest_stable
+      LATEST_STABLE
+    end
+
+    def self.urlize(version)
+      "https://cache.ruby-lang.org/pub/ruby/#{version[0..2]}/ruby-#{version}.tar.gz"
     end
   end
 end

@@ -4,7 +4,25 @@
 # email:: cameronbtesterman@gmail.com
 # created:: 2017-04-14 1:19PM
 #
-# © 2017 Cameron Testerman
+
+# Copyright (c) 2017 Cameron Testerman
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+# and associated documentation files (the “Software”), to deal in the Software without
+# restriction, including without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
+# Software is furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all copies or
+# substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+# THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+# OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+# ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+# OTHER DEALINGS IN THE SOFTWARE.
 
 require 'fileutils'
 require 'net/http'
@@ -57,7 +75,7 @@ module Mineshaft
     end
 
     def download(url, download_dir)
-      puts "Downloading #{url}"
+      puts "🪄  Downloading Ruby #@version..."
       split_url(url) do |site, file|
         Net::HTTP.start(site) do |http|
           response = http.get(file)
@@ -66,28 +84,30 @@ module Mineshaft
           end
         end
       end
+      puts "🎉 Ruby #@version successfully downloaded!"
     end
 
     def unzip(dir)
       FileUtils::mkdir_p("#{dir}/ruby-#@version")
       tar_extract = Gem::Package::TarReader.new(Zlib::GzipReader.open("#{dir}/#@ruby_archive"))
       tar_extract.rewind
-      puts "Unzipping archive"
+      puts "🗃️  Unzipping archive..."
       tar_extract.each do |entry|
         if entry.full_name.split('').last == '/'
-          puts "extracted dir: #{dir}/#{entry.full_name}"
+          puts "extracted dir: #{dir}/#{entry.full_name}" if @options[:verbose]
           FileUtils::mkdir_p("#{dir}/#{entry.full_name}")
         elsif entry.file?
-          puts "extracted file: #{dir}/#{entry.full_name}"
+          puts "extracted file: #{dir}/#{entry.full_name}" if @options[:verbose]
           File.open("#{dir}/#{entry.full_name}", 'w') {|file| file.write(entry.read)}
         end
       end
-      puts "Archive successfully unzipped"
+      puts "🥳 Archive successfully unzipped!"
       tar_extract.close
     end
 
     def configure_options(prefix)
       config = @global ? "./configure --prefix #{@directory}" : "./configure --prefix #{File.expand_path(@directory)}"
+      config << " > /dev/null 2>&1" unless @options[:verbose]
 
       if @options[:no_openssl_dir]
         config
@@ -99,17 +119,29 @@ module Mineshaft
     end
 
     def build(prefix)
-      puts "Building environment in #{prefix}"
-      puts "Directory is #{@directory}"
-      puts @options[:no_openssl_dir]
-      dir = "#{@directory}/ruby-#@version"
-      commands = [
-        "chmod +x configure tool/ifchange",
-        configure_options(prefix),
-        "make",
-        "make install"
-      ]
-      commands.each { |command| shell(dir, command) }
+      puts "🏗️  Building Ruby... (this will take some time)"
+      puts "Directory is #{@directory}" if @options[:verbose]
+      puts @options[:no_openssl_dir] if @options[:verbose]
+      directory = "#{@directory}/ruby-#@version"
+
+      commands = if @options[:verbose]
+        [
+          "chmod +x configure tool/ifchange",
+          configure_options(prefix),
+          "make",
+          "make install"
+        ]
+      else
+        [
+          "chmod +x configure tool/ifchange",
+          configure_options(prefix),
+          "make > /dev/null 2>&1",
+          "make install > /dev/null 2>&1"
+        ]
+      end
+
+      commands.each { |command| shell(directory:, commands: command, verbose: @options[:verbose]) }
+      puts "✨ Ruby environment was successfully built!"
     end
   end
 end

@@ -4,7 +4,25 @@
 # email:: cameronbtesterman@gmail.com
 # created:: 2017-04-14 1:19PM
 #
-# © 2017 Cameron Testerman
+
+# Copyright (c) 2017 Cameron Testerman
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+# and associated documentation files (the “Software”), to deal in the Software without
+# restriction, including without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
+# Software is furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all copies or
+# substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+# THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+# OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+# ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+# OTHER DEALINGS IN THE SOFTWARE.
 
 require 'fileutils'
 require 'yaml'
@@ -34,26 +52,19 @@ module Mineshaft
 
     def use
       set_new_global
-      puts "Now using the environment at: #@dir" 
+      puts "Now using the environment at: #@dir"
     end
 
     private
 
-    def build_version_url
-      "https://cache.ruby-lang.org/pub/ruby/#{@version[0..2]}/ruby-#{@version}.tar.gz"
-    end
-
     def install_ruby
       Mineshaft::Installer.new do |config|
-        config.url = build_version_url
+        config.url = Mineshaft::RubyVersions.urlize(@version)
         config.directory = @dir
         config.version = @version
         config.options = @options
         config.global = @options[:global]
       end.run
-    end
-
-    def install_mineshaft
     end
 
     def create_activate_script
@@ -86,16 +97,23 @@ module Mineshaft
       FileUtils.mkdir_p "#{Dir.home}/.mineshaft/bin"
       FileUtils.rm Dir.glob("#{Dir.home}/.mineshaft/bin/*")
 
-      if File.readlines("#{Dir.home}/.bash_profile").grep(/mineshaft/).length == 0
-        open("#{Dir.home}/.bash_profile", 'a') do |f|
-          f.puts("PATH=#{Dir.home}/.mineshaft/bin:$PATH")
-        end
-      end
+      ["#{Dir.home}/.bash_profile", "#{Dir.home}/.zshrc"]
+        .each { |profile| modify_shell_profile(profile) }
 
       Dir["#{@dir}/bin/*"].each do |binary_absolute|
         binary = binary_absolute.split("/").last
         FileUtils::ln_s binary_absolute, "#{Dir.home}/.mineshaft/bin/#{binary}" 
       end
+    end
+
+    def modify_shell_profile(profile)
+      puts "modifying #{profile}" unless @options[:verbose]
+      return unless File.exist?(profile)
+      puts "profile exists" unless @options[:verbose]
+      mineshaft_path_not_set = File.readlines(profile).grep(/mineshaft/).length == 0
+      puts "mineshaft_path_not_set: #{mineshaft_path_not_set}" unless @options[:verbose]
+      open(profile, 'a') { |f| f.puts("PATH=#{Dir.home}/.mineshaft/bin:$PATH") } if mineshaft_path_not_set
+      puts "profile modified!" unless @options[:verbose]
     end
   end
 end

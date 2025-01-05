@@ -9,7 +9,7 @@ day   = date.day.to_s.length   == 1 ? Mineshaft::Date.prepend_zero(date.day)   :
 
 Gem::Specification.new do |spec|
   spec.name                        = "mineshaft"
-  spec.version                     = Mineshaft::VERSION
+  spec.version                     = Mineshaft::Version.current
   spec.date                        = "#{year}-#{month}-#{day}"
   spec.summary                     = "Ruby virtual environment manager"
   spec.authors                     = [ "Cameron Testerman" ]

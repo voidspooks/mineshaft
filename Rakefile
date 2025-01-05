@@ -32,6 +32,6 @@ task :versions do
     end
 end
 
-task :default => :spec
 task :test    => :spec
 task :cycle  => [ :build, :install ]
+task :default => :cycle

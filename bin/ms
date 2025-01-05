@@ -1,4 +1,5 @@
 #!/usr/bin/ruby
+# frozen_string_literal: true
 #
 # mineshaft
 #
@@ -6,7 +7,25 @@
 # email:: cameronbtesterman@gmail.com
 # created:: 2017-04-14 1:19PM
 #
-# © 2017 Cameron Testerman
+
+# Copyright (c) 2017 Cameron Testerman
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+# and associated documentation files (the “Software”), to deal in the Software without
+# restriction, including without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
+# Software is furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all copies or
+# substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+# THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+# OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+# ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+# OTHER DEALINGS IN THE SOFTWARE.
 
 require "mineshaft"
 require "optparse"
@@ -15,11 +34,12 @@ require "pry"
 
 options = {
   openssl_dir: "/usr/local/opt/openssl",
-  version: Mineshaft::Constants::RUBY_VERSION_STABLE,
-  global: false
+  version: Mineshaft::RubyVersions.latest_stable,
+  global: false,
+  verbose: false
 }
 
-info = nil
+help = nil
 
 parser = OptionParser.new do |opts|
   opts.banner = "Usage: ms [command] [options]"
@@ -31,13 +51,15 @@ parser = OptionParser.new do |opts|
   opts.separator "    new                              creates new environment"
   opts.separator "    reload                           reloads binaries using the current global Ruby version"
   opts.separator "    use                              selects an installed global Ruby environment to use"
+  opts.separator "    version                          displays the current version of mineshaft"
   opts.separator ""
   opts.separator "Options"
 
-  opts.on("-v", "--version", "displays the current version of mineshaft") do
-      puts "mineshaft v#{Mineshaft::VERSION}"
-      exit
+  opts.on("-v", "--verbose", "provides more output from mineshaft, helpful in debugging") do
+    options[:verbose] = true
   end
+
+  opts.on("")
 
   opts.on("-o", "--with-openssl-dir DIR", "specify the directory where OpenSSL is installed") do |openssl_dir|
       options[:openssl_dir] = openssl_dir
@@ -47,11 +69,7 @@ parser = OptionParser.new do |opts|
       options[:no_openssl_dir] = true
   end
 
-  opts.on("", "", "") do
-    puts opts
-  end
-
-  info = opts
+  help = opts.help
 end
 
 parser.parse!
@@ -66,7 +84,7 @@ when "install"
     options[:version] = ARGV[1] if ARGV[1]
     name = options[:version]
   else
-    name = Mineshaft::Constants::RUBY_VERSION_STABLE
+    name = Mineshaft::RubyVersions.latest_stable
   end
 
   Mineshaft.new(name, options)
@@ -82,6 +100,8 @@ when "use"
   name = ARGV[ARGV.index("use") + 1]
   options[:global] = true
   Mineshaft.use(name, options)
+when "version"
+  puts "mineshaft v#{Mineshaft::Version.current}"
 else
-  info.help
+  puts help
 end

@@ -1,22 +1,32 @@
 require 'spec_helper'
 
-describe Mineshaft::Installer do
-  it "should install ruby" do
-    versions = YAML.load_file(File.join(File.dirname(File.expand_path(__FILE__)), '../versions/versions.yaml'))
-    options  = {
-      openssl_dir: "/usr/local/opt/openssl",
-      version: Mineshaft::Constants::RUBY_VERSION_STABLE,
-      global: false
-    } 
+RSpec.describe Mineshaft::Installer do
+  describe '#run' do
+    context 'with valid configuration' do
+      let(:latest_stable) { Mineshaft::RubyVersions.latest_stable }
+      let(:dir) { 'test_dir'}
+      let(:options) do
+        {
+          openssl_dir: "/usr/local/opt/openssl",
+          version: latest_stable,
+          global: false
+        }
+      end
 
-    Mineshaft::Installer.new do |config|
-      config.url       = versions[Mineshaft::Constants::RUBY_VERSION_STABLE]
-      config.directory = 'installer_test'
-      config.version   = Mineshaft::Constants::RUBY_VERSION_STABLE
-      config.options   = options
-      config.global    = options[:global]
-    end.run
+      before do
+        FileUtils::mkdir_p(dir)
+        Mineshaft::Installer.new do |config|
+          config.url       = Mineshaft::RubyVersions.urlize(latest_stable)
+          config.directory = dir
+          config.version   = latest_stable
+          config.options   = options
+          config.global    = options[:global]
+        end.run
+      end
 
-    expect(File).to exist('installer_test/bin/ruby')
+      after { FileUtils.rm_rf(dir) }
+
+      it { expect(File).to exist("#{dir}/bin/ruby") }
+    end
   end
 end

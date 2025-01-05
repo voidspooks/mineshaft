@@ -24,6 +24,7 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 
 require 'yaml'
+require 'mineshaft/ruby_versions'
 
 module Mineshaft
   class Commands
@@ -41,7 +42,7 @@ module Mineshaft
 
     @options = {
       openssl_dir: '/opt/homebrew/opt/openssl',
-      version: RUBY_VERSION,
+      version: Mineshaft::RubyVersions.latest_stable,
       global: false,
       verbose: false
     }

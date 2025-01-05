@@ -32,7 +32,6 @@ require 'pry'
 LOGGER = Mineshaft::Logger
 VERSION = Mineshaft::Version.current
 COMMANDS = Mineshaft::Commands
-RUBY_VERSION = Mineshaft::RubyVersions.latest_stable
 OPTIONS = Mineshaft::Options.new
 
 OPTIONS.parse!

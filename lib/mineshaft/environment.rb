@@ -34,7 +34,7 @@ module Mineshaft
     def initialize(dir, options)
       @dir = options[:global] ? File.join(Dir.home, '.mineshaft', dir) : dir
       @options = options
-      @version = @options[:version] || Mineshaft::RubyVersions::LATEST_STABLE
+      @version = @options[:version] || Mineshaft::RubyVersions.latest_stable
       @logger = Mineshaft::Logger
     end
 

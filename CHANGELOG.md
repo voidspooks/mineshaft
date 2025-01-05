@@ -7,8 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [5.1.0]
 ### Added
 - Added custom logger class
-- Added `RubyVersions` class which returns Ruby versions able to install
+- Added `Mineshaft::RubyVersions` module which returns Ruby versions able to install
 - Lots of new tests
+- New `Mineshaft::Options` class that wraps around OptionParser
 
 ### Changed
 - Output is a lot less verbose now, unless you pass in the `-v` flag

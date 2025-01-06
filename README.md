@@ -1,4 +1,4 @@
-# Mineshaft
+# mineshaft
 Inspired by PyPA's Virtualenv, Mineshaft allows for the creation of isolated Ruby virtual environments. It aims to simplify the process of installing and using multiple versions of Ruby.
 
 ## Installation
@@ -35,7 +35,7 @@ ms new env
 To specify a particular version of Ruby, add the version number after the env name
 
 ```bash
-ms new env 3.4.0
+ms new env 3.4.1
 ```
 
 To use the new environment, you must activate it using the `activate.sh` script.
@@ -49,7 +49,7 @@ source env/bin/activate.sh
 You can install a Ruby environment globally by running the following command. Specify the version of Ruby after the `install` keyword. This will replace your current system wide Ruby for the user running Mineshaft.
 
 ```bash
-ms install 3.4.0
+ms install 3.4.1
 ```
 
 To view all globally installed Rubies
@@ -71,7 +71,7 @@ ms reload
 To switch between environments, use the `use` keyword followed by a version of Ruby installed on your machine.
 
 ```bash
-ms use 3.4.0
+ms use 3.4.1
 ```
 
 ## Development Resources
@@ -84,10 +84,6 @@ There is rake test defined to run the test suite. `rspec` ~> 3.13.0 must be inst
 rake test
 ```
 
-## Authors
+## License
 
-Cameron Testerman   --  cameronbtesterman@gmail.com
-
-Copyright 2017-2024, Cameron Testerman
-
-Released under MIT license.  
+Released under the [MIT license](https://opensource.org/license/MIT).  

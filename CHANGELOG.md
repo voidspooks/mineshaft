@@ -1,11 +1,24 @@
 # Changelog
-All notable changes to this project will be documented in this file.
+All notable changes to this project will be documented in this file
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html)
+
+## [5.1.0]
+### Added
+- Added custom logger class
+- Added `Mineshaft::RubyVersions` module which returns Ruby versions able to install
+- Lots of new tests
+- New `Mineshaft::Options` class that wraps around OptionParser
+
+### Changed
+- Output is a lot less verbose now, unless you pass in the `-v` flag
+- Default Ruby version bumped to 3.4.1
+- Updated Gemfile.lock; bundled with bundler 2.6.2
+- Added emojis to output messages
 
 ## [5.0.0] 2021-05-11
-- Environment no longer uses version.yaml; any version specified that is available to download from https://cache.ruby-lang.org can be downloaded now.
+- Environment no longer uses version.yaml; any version specified that is available to download from https://cache.ruby-lang.org can be downloaded now
 
 ## [4.2.0] 2020-09-14
 - Updated the gem homepage to https://gitlab.com/ctesterman/mineshaft

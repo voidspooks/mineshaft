@@ -1,84 +1,40 @@
 #!/usr/bin/ruby
-#
-# mineshaft
-#
+# frozen_string_literal: true
+
 # author:: Cameron Testerman
 # email:: cameronbtesterman@gmail.com
 # created:: 2017-04-14 1:19PM
+
+# Copyright (c) 2017 Cameron Testerman
 #
-# Copyright (c) 2017-2021 Cameron Testerman
+# Permission is hereby granted, free of charge, to any person obtaining a copy of this software
+# and associated documentation files (the “Software”), to deal in the Software without
+# restriction, including without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
+# Software is furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all copies or
+# substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+# THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+# OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+# ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+# OTHER DEALINGS IN THE SOFTWARE.
 
-require "mineshaft"
-require "optparse"
-require "yaml"
+require 'mineshaft'
+require 'optparse'
+require 'yaml'
+require 'pry'
 
-options = {
-  openssl_dir: "/usr/local/opt/openssl",
-  version: Mineshaft::Constants::RUBY_VERSION_STABLE,
-  global: false
-}
+LOGGER = Mineshaft::Logger
+VERSION = Mineshaft::Version.current
+COMMANDS = Mineshaft::Commands
+OPTIONS = Mineshaft::Options.new
 
-parser = OptionParser.new do |opts|
-  opts.banner = "Usage: ms [command] [options]"
-  opts.separator ""
-  opts.separator "Commands"
-  opts.separator "    env                              shows a list of all installed global Rubies, with the current one in use highlighted"
-  opts.separator "    install                          installs a new global Ruby"
-  opts.separator "    list                             lists the ten latest versions of Ruby available to install"
-  opts.separator "    new                              creates new environment"
-  opts.separator "    reload                           reloads binaries using the current global Ruby version"
-  opts.separator "    use                              selects an installed global Ruby environment to use"
-  opts.separator ""
-  opts.separator "Options"
+OPTIONS.parse!
 
-  opts.on("-v",
-    "--version",
-    "displays the current version of mineshaft") do
-      puts "Mineshaft v#{Mineshaft::VERSION}"
-      exit
-  end
-
-  opts.on("-o",
-    "--with-openssl-dir DIR",
-    "specify the directory where OpenSSL is installed") do |openssl_dir|
-      options[:openssl_dir] = openssl_dir
-  end
-
-  opts.on("-n",
-    "--no-openssl-dir",
-    "do not set the OpenSSL directory - otherwise this defaults to /usr/local/opt/openssl") do |no_openssl|
-      options[:no_openssl_dir] = true
-  end
-end
-
-parser.parse!
-
-case ARGV[0]
-when "env"
-  Mineshaft.env
-when "install"
-  options[:global] = true
-
-  if ARGV[1]
-    options[:version] = ARGV[1] if ARGV[1]
-    name = options[:version]
-  else
-    name = Mineshaft::Constants::RUBY_VERSION_STABLE
-  end
-
-  Mineshaft.new(name, options)
-when "list"
-  Mineshaft.list
-when "new"
-  name = ARGV[ARGV.index("new") + 1]
-  options[:version] = ARGV[2] if ARGV[2]
-  Mineshaft.new(name, options)
-when "reload"
-  Mineshaft.reload
-when "use"
-  name = ARGV[ARGV.index("use") + 1]
-  options[:global] = true
-  Mineshaft.use(name, options)
-else
-  puts "Unrecognized command - #{ARGV[0]}" 
-end
+LOGGER.log(OPTIONS.get(:help)) if ARGV.empty?
+COMMANDS.send(ARGV[0]) unless ARGV.empty?

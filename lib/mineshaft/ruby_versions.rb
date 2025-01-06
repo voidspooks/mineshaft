@@ -2,7 +2,7 @@
 
 # author:: Cameron Testerman
 # email:: cameronbtesterman@gmail.com
-# created:: 2017-04-14 1:19PM
+# created:: 2025-01-04 12:09AM
 
 # Copyright (c) 2017 Cameron Testerman
 #
@@ -23,14 +23,24 @@
 # ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 
-require 'mineshaft/constants'
-require 'mineshaft/logger'
-require 'mineshaft/options'
-require 'mineshaft/date'
-require 'mineshaft/downloader'
-require 'mineshaft/environment'
-require 'mineshaft/unzipper'
-require 'mineshaft/installer'
-require 'mineshaft/version'
-require 'mineshaft/ruby_versions'
-require 'mineshaft/commands'
+module Mineshaft
+  module RubyVersions
+    LATEST_STABLE = '3.4.1'
+
+    def self.latest_stable
+      LATEST_STABLE
+    end
+
+    def self.urlize(version)
+      "https://cache.ruby-lang.org/pub/ruby/#{version[0..2]}/ruby-#{version}.tar.gz"
+    end
+
+    def self.site
+      'cache.ruby-lang.org'
+    end
+
+    def self.zipfile(version)
+      "/pub/ruby/#{version[0..2]}/ruby-#{version}.tar.gz"
+    end
+  end
+end

@@ -47,43 +47,12 @@ module Mineshaft
 
     private
 
-    def find_slash_indices
-      slash_array = []
-      url = @url.split('')
-      i = 0
-
-      url.each do |l|
-        break if slash_array.length == 3
-
-        slash_array.push(i) if l == '/'
-        i += 1
-      end
-
-      @slash_array = slash_array
-    end
-
-    def split_url
-      find_slash_indices
-      beg = @slash_array[1] + 1
-      fin = @slash_array[2] - 1
-      site = @url[beg..fin]
-      fin += 1
-      tar = @url[fin..url.length]
-
-      yield site, tar
-    end
-
     def download
-      @logger.log "🪄  Downloading Ruby #{@version}..."
-      split_url do |site, file|
-        Net::HTTP.start(site) do |http|
-          response = http.get(file)
-          open("#{@directory}/#{@ruby_archive}", 'w') do |f|
-            f.write(response.body)
-          end
-        end
-      end
-      @logger.log "🎉 Ruby #{@version} successfully downloaded!"
+      Mineshaft::Downloader
+        .download(
+          version: @version, 
+          destination: "#{@directory}/#{@ruby_archive}"
+        )
     end
 
     def unzip

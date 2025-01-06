@@ -35,10 +35,12 @@ module Mineshaft
       "https://cache.ruby-lang.org/pub/ruby/#{version[0..2]}/ruby-#{version}.tar.gz"
     end
 
-    def self.site(version)
+    def self.site
+      'cache.ruby-lang.org'
     end
 
     def self.zipfile(version)
+      "/pub/ruby/#{version[0..2]}/ruby-#{version}.tar.gz"
     end
   end
 end

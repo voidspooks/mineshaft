@@ -25,5 +25,30 @@
 
 module Mineshaft
   module Downloader
+    def self.download(version:, destination:)
+      LOGGER.log "🪄  Downloading Ruby #{version}..."
+
+      site = Mineshaft::RubyVersions.site
+      zipfile = Mineshaft::RubyVersions.zipfile(version)
+
+      download_file(site, zipfile, destination) do |response|
+        write_file(destination, response)
+      end
+
+      LOGGER.log "🎉 Ruby #{version} successfully downloaded!"
+    end
+
+    def self.write_file(destination, response)
+      open(destination, 'w') do |f|
+        f.write(response.body)
+      end
+    end
+
+    def self.download_file(site, file, destination)
+      Net::HTTP.start(site) do |http|
+        response = http.get(file)
+        yield response
+      end
+    end
   end
 end

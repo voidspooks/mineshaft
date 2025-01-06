@@ -58,5 +58,7 @@ task :reset do
 end
 
 task test: :spec
-task cycle: %i[reset build install]
+task rebuild: %i[build install]
+task reload: %i[rebuild]
+task cycle: %i[reset rebuild]
 task default: :cycle

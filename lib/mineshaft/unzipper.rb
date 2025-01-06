@@ -2,7 +2,7 @@
 
 # author:: Cameron Testerman
 # email:: cameronbtesterman@gmail.com
-# created:: 2017-04-14 1:19PM
+# created:: 2025-01-05 9:29PM
 
 # Copyright (c) 2017 Cameron Testerman
 #
@@ -23,14 +23,29 @@
 # ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 # OTHER DEALINGS IN THE SOFTWARE.
 
-require 'mineshaft/constants'
-require 'mineshaft/logger'
-require 'mineshaft/options'
-require 'mineshaft/date'
-require 'mineshaft/downloader'
-require 'mineshaft/environment'
-require 'mineshaft/unzipper'
-require 'mineshaft/installer'
-require 'mineshaft/version'
-require 'mineshaft/ruby_versions'
-require 'mineshaft/commands'
+module Mineshaft
+  class Unzipper
+    def initialize(directory)
+      @directory = directory
+      @version = OPTIONS.get(:version)
+    end
+
+    def unzip
+      FileUtils.mkdir_p("#{@directory}/ruby-#{@version}")
+      tar_extract = Gem::Package::TarReader.new(Zlib::GzipReader.open("#{@directory}/#{Mineshaft::Installer::RUBY_ARCHIVE}"))
+      tar_extract.rewind
+      LOGGER.log '🗃️  Unzipping archive...'
+      tar_extract.each do |entry|
+        if entry.full_name.split('').last == '/'
+          LOGGER.log "extracted dir: #{@diretory}}/#{entry.full_name}", level: :debug
+          FileUtils.mkdir_p("#{@directory}/#{entry.full_name}")
+        elsif entry.file?
+          LOGGER.log "extracted file: #{@directory}/#{entry.full_name}", level: :debug
+          File.open("#{@directory}/#{entry.full_name}", 'w') { |file| file.write(entry.read) }
+        end
+      end
+      LOGGER.log '🥳 Archive successfully unzipped!'
+      tar_extract.close
+    end
+  end
+end

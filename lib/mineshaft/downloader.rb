@@ -39,7 +39,7 @@ module Mineshaft
     end
 
     def self.write_file(destination, response)
-      open(destination, 'w') do |f|
+      open("#{destination}/#{Mineshaft::Installer::RUBY_ARCHIVE}", 'w') do |f|
         f.write(response.body)
       end
     end

@@ -35,8 +35,9 @@ module Mineshaft
 
     include Mineshaft::Shell
 
+    RUBY_ARCHIVE = 'ruby.tar.gz'
+
     def initialize
-      @ruby_archive = 'ruby.tar.gz'
       @logger = Mineshaft::Logger
       yield self
     end
@@ -56,21 +57,8 @@ module Mineshaft
     end
 
     def unzip
-      FileUtils.mkdir_p("#{@directory}/ruby-#{@version}")
-      tar_extract = Gem::Package::TarReader.new(Zlib::GzipReader.open("#{@directory}/#{@ruby_archive}"))
-      tar_extract.rewind
-      @logger.log '🗃️  Unzipping archive...'
-      tar_extract.each do |entry|
-        if entry.full_name.split('').last == '/'
-          @logger.log "extracted dir: #{@diretory}}/#{entry.full_name}", level: :debug
-          FileUtils.mkdir_p("#{@directory}/#{entry.full_name}")
-        elsif entry.file?
-          @logger.log "extracted file: #{@directory}/#{entry.full_name}", level: :debug
-          File.open("#{@directory}/#{entry.full_name}", 'w') { |file| file.write(entry.read) }
-        end
-      end
-      @logger.log '🥳 Archive successfully unzipped!'
-      tar_extract.close
+      unzipper = Mineshaft::Unzipper.new(@directory)
+      unzipper.unzip
     end
 
     def configure_options

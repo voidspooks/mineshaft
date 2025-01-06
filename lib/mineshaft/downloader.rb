@@ -2,7 +2,7 @@
 
 # author:: Cameron Testerman
 # email:: cameronbtesterman@gmail.com
-# created:: 2025-01-05 2:14PM
+# created:: 2025-01-05 7:49PM
 
 # Copyright (c) 2017 Cameron Testerman
 #
@@ -24,23 +24,6 @@
 # OTHER DEALINGS IN THE SOFTWARE.
 
 module Mineshaft
-  class Logger
-    @verbose = false
-
-    class << self
-      attr_reader :verbose
-    end
-
-    class << self
-      attr_writer :verbose
-    end
-
-    def verbose
-      self.class.verbose
-    end
-
-    def self.log(message, level: :info)
-      puts message if (@verbose && level == :debug) || level == :info
-    end
+  module Downloader
   end
 end

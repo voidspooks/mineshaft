@@ -34,5 +34,11 @@ module Mineshaft
     def self.urlize(version)
       "https://cache.ruby-lang.org/pub/ruby/#{version[0..2]}/ruby-#{version}.tar.gz"
     end
+
+    def self.site(version)
+    end
+
+    def self.zipfile(version)
+    end
   end
 end

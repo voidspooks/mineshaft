@@ -116,8 +116,5 @@ module Mineshaft
     def self.version
       @logger.log "mineshaft v#{Mineshaft::Version.current}"
     end
-
-    def self.help
-    end
   end
 end

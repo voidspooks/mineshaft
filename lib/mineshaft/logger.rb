@@ -27,12 +27,12 @@ module Mineshaft
   class Logger
     @verbose = false
 
-    def self.verbose
-      @verbose
+    class << self
+      attr_reader :verbose
     end
 
-    def self.verbose=(value)
-      @verbose = value
+    class << self
+      attr_writer :verbose
     end
 
     def verbose

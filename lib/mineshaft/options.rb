@@ -37,7 +37,7 @@ module Mineshaft
       @parser = parser
     end
 
-    def parse!      
+    def parse!
       @parser.parse!
     end
 
@@ -65,15 +65,15 @@ module Mineshaft
         opts.separator '    version                          displays the current version of mineshaft'
         opts.separator ''
         opts.separator 'Options'
-      
+
         opts.on('-v', '--verbose', 'provides more output from mineshaft, helpful in debugging') do
           LOGGER.verbose = true
         end
-      
+
         opts.on('-o', '--with-openssl-dir DIR', 'specify the directory where OpenSSL is installed') do |openssl_dir|
           @options[:openssl_dir] = openssl_dir
         end
-      
+
         opts.on('-n', '--no-openssl-dir',
                 'do not set the OpenSSL directory - otherwise this defaults to /usr/local/opt/openssl') do |_no_openssl|
           @options[:no_openssl_dir] = true

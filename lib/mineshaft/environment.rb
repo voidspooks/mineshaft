@@ -29,19 +29,18 @@ require 'mineshaft/commands'
 
 module Mineshaft
   class Environment
-    attr_reader :dir
+    attr_reader :directory
 
-    def initialize(dir, options)
-      @dir = options[:global] ? File.join(Dir.home, '.mineshaft', dir) : dir
-      @options = options
-      @version = @options[:version] || Mineshaft::RubyVersions.latest_stable
+    def initialize(directory)
+      @directory = OPTIONS.get(:global) ? File.join(Dir.home, '.mineshaft', directory) : directory
+      @version = OPTIONS.get(:version) || Mineshaft::RubyVersions.latest_stable
       @logger = Mineshaft::Logger
     end
 
     def create
-      FileUtils.mkdir_p(@dir)
+      FileUtils.mkdir_p(@directory)
       install_ruby
-      if @options[:global]
+      if OPTIONS.get(:global)
         set_new_global
         `gem install mineshaft`
         Mineshaft::Commands.reload
@@ -52,7 +51,7 @@ module Mineshaft
 
     def use
       set_new_global
-      @logger.log "Now using the environment at: #{@dir}"
+      @logger.log "Now using the environment at: #{@directory}"
     end
 
     private
@@ -60,26 +59,24 @@ module Mineshaft
     def install_ruby
       Mineshaft::Installer.new do |config|
         config.url = Mineshaft::RubyVersions.urlize(@version)
-        config.directory = @dir
+        config.directory = @directory
         config.version = @version
-        config.options = @options
-        config.global = @options[:global]
       end.run
     end
 
     def create_activate_script
-      open("#{@dir}/bin/activate.sh", 'w') do |f|
+      open("#{@directory}/bin/activate.sh", 'w') do |f|
         f << "#!/bin/bash\n"
         f << "#\n"
         f << "# activate.sh\n"
         f << "\n"
         f << "OLDPS1=$PS1\n"
-        f << "ENV=#{@dir}\n"
+        f << "ENV=#{@directory}\n"
         f << 'PS1="($ENV)${OLDPS1}"'
         f << "\n"
         f << "\n"
         f << "OLDPATH=$PATH\n"
-        f << "PATH=#{File.expand_path("#{@dir}/bin")}:$OLDPATH\n"
+        f << "PATH=#{File.expand_path("#{@directory}/bin")}:$OLDPATH\n"
         f << "\n"
         f << "deactivate() {\n"
         f << "  PS1=$OLDPS1\n"
@@ -89,8 +86,8 @@ module Mineshaft
     end
 
     def set_new_global
-      if Dir["#{@dir}/bin/*"].empty?
-        @logger.log "#{@dir} is not a valid environment - exiting"
+      if Dir["#{@directory}/bin/*"].empty?
+        @logger.log "#{@directory} is not a valid environment - exiting"
         exit
       end
 
@@ -100,7 +97,7 @@ module Mineshaft
       ["#{Dir.home}/.bash_profile", "#{Dir.home}/.zshrc"]
         .each { |profile| modify_shell_profile(profile) }
 
-      Dir["#{@dir}/bin/*"].each do |binary_absolute|
+      Dir["#{@directory}/bin/*"].each do |binary_absolute|
         binary = binary_absolute.split('/').last
         FileUtils.ln_s binary_absolute, "#{Dir.home}/.mineshaft/bin/#{binary}"
       end

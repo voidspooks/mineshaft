@@ -31,7 +31,7 @@ require 'mineshaft/shell'
 
 module Mineshaft
   class Installer
-    attr_accessor :url, :directory, :version, :options, :global
+    attr_accessor :url, :directory, :version
 
     include Mineshaft::Shell
 
@@ -42,16 +42,14 @@ module Mineshaft
     end
 
     def run
-      download @url, @directory
-      unzip          @directory
-      build          @directory
+      download; unzip; build
     end
 
     private
 
-    def find_slash_indices(url)
+    def find_slash_indices
       slash_array = []
-      url = url.split('')
+      url = @url.split('')
       i = 0
 
       url.each do |l|
@@ -64,23 +62,23 @@ module Mineshaft
       @slash_array = slash_array
     end
 
-    def split_url(url)
-      find_slash_indices(url)
+    def split_url
+      find_slash_indices
       beg = @slash_array[1] + 1
       fin = @slash_array[2] - 1
-      site = url[beg..fin]
+      site = @url[beg..fin]
       fin += 1
-      tar = url[fin..url.length]
+      tar = @url[fin..url.length]
 
       yield site, tar
     end
 
-    def download(url, download_dir)
+    def download
       @logger.log "🪄  Downloading Ruby #{@version}..."
-      split_url(url) do |site, file|
+      split_url do |site, file|
         Net::HTTP.start(site) do |http|
           response = http.get(file)
-          open("#{download_dir}/#{@ruby_archive}", 'w') do |f|
+          open("#{@directory}/#{@ruby_archive}", 'w') do |f|
             f.write(response.body)
           end
         end
@@ -88,54 +86,49 @@ module Mineshaft
       @logger.log "🎉 Ruby #{@version} successfully downloaded!"
     end
 
-    def unzip(dir)
-      FileUtils.mkdir_p("#{dir}/ruby-#{@version}")
-      tar_extract = Gem::Package::TarReader.new(Zlib::GzipReader.open("#{dir}/#{@ruby_archive}"))
+    def unzip
+      FileUtils.mkdir_p("#{@directory}/ruby-#{@version}")
+      tar_extract = Gem::Package::TarReader.new(Zlib::GzipReader.open("#{@directory}/#{@ruby_archive}"))
       tar_extract.rewind
       @logger.log '🗃️  Unzipping archive...'
       tar_extract.each do |entry|
         if entry.full_name.split('').last == '/'
-          @logger.log "extracted dir: #{dir}/#{entry.full_name}", level: :debug
-          FileUtils.mkdir_p("#{dir}/#{entry.full_name}")
+          @logger.log "extracted dir: #{@diretory}}/#{entry.full_name}", level: :debug
+          FileUtils.mkdir_p("#{@directory}/#{entry.full_name}")
         elsif entry.file?
-          @logger.log "extracted file: #{dir}/#{entry.full_name}", level: :debug
-          File.open("#{dir}/#{entry.full_name}", 'w') { |file| file.write(entry.read) }
+          @logger.log "extracted file: #{@directory}/#{entry.full_name}", level: :debug
+          File.open("#{@directory}/#{entry.full_name}", 'w') { |file| file.write(entry.read) }
         end
       end
       @logger.log '🥳 Archive successfully unzipped!'
       tar_extract.close
     end
 
-    def configure_options(_prefix)
+    def configure_options
       config = @global ? "./configure --prefix #{@directory}" : "./configure --prefix #{File.expand_path(@directory)}"
-      config << ' > /dev/null 2>&1' unless @options[:verbose]
-
-      if @options[:no_openssl_dir]
-        config
-      else
-        config << " --with-openssl-dir=#{@options[:openssl_dir]}"
-      end
-
+      config << ' > /dev/null 2>&1' unless @logger.verbose
+      config << " --with-openssl-dir=#{OPTIONS.get(:openssl_dir)}" unless OPTIONS.get(:no_openssl_dir)
+      @logger.log "Configuring Ruby with: #{config}", level: :debug
       config
     end
 
-    def build(prefix)
+    def build
       @logger.log '🏗️  Building Ruby... (this will take some time)'
       @logger.log "Directory is #{@directory}", level: :debug
-      @logger.log @options[:no_openssl_dir], level: :debug
+      @logger.log OPTIONS.get(:openssl_dir), level: :debug
       directory = "#{@directory}/ruby-#{@version}"
 
-      commands = if @options[:verbose]
+      commands = if @logger.verbose
                    [
                      'chmod +x configure tool/ifchange',
-                     configure_options(prefix),
+                     configure_options,
                      'make',
                      'make install'
                    ]
                  else
                    [
                      'chmod +x configure tool/ifchange',
-                     configure_options(prefix),
+                     configure_options,
                      'make > /dev/null 2>&1',
                      'make install > /dev/null 2>&1'
                    ]

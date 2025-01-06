@@ -36,7 +36,5 @@ OPTIONS = Mineshaft::Options.new
 
 OPTIONS.parse!
 
-COMMANDS.help if ARGV.empty?
-exit if ARGV.empty?
-
-COMMANDS.send(ARGV[0]) if COMMANDS.respond_to?(ARGV[0])
+LOGGER.log(OPTIONS.get(:help)) if ARGV.empty?
+COMMANDS.send(ARGV[0]) unless ARGV.empty?

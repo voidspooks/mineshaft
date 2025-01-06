@@ -40,39 +40,10 @@ module Mineshaft
       'help'
     ]
 
-    @options = {
-      openssl_dir: '/opt/homebrew/opt/openssl',
-      version: Mineshaft::RubyVersions.latest_stable,
-      global: false,
-      verbose: false
-    }
-
     @logger = Mineshaft::Logger
 
-    def self.options
-      @options
-    end
-  
-    def self.options=(value)
-      @options = value
-    end
-
-    def options
-      self.class.options
-    end
-
-    @help = nil
-
     def self.help
-      @logger.log @help
-    end
-
-    def self.help=(value)
-      @help = value
-    end
-
-    def help
-      self.class.help
+      LOGGER.log(OPTIONS.get(:help))
     end
 
     def self.env
@@ -85,11 +56,11 @@ module Mineshaft
     end
 
     def self.install
-      options[:global] = true
+      OPTIONS.set(:global, true)
     
       if ARGV[1]
-        options[:version] = ARGV[1] if ARGV[1]
-        name = options[:version]
+        OPTIONS.set(:version, ARGV[1]) if ARGV[1]
+        name = OPTIONS.get(:version)
       else
         name = Mineshaft::RubyVersions.latest_stable
       end
@@ -97,8 +68,8 @@ module Mineshaft
       COMMANDS.new(name:)
     end
   
-    def self.environment(name, options)
-      Mineshaft::Environment.new(name, options)
+    def self.environment(name)
+      Mineshaft::Environment.new(name)
     end
   
     def self.new(name: nil)
@@ -106,14 +77,14 @@ module Mineshaft
         name = ARGV[ARGV.index('new') + 1]
       end
       
-      options[:version] = ARGV[2] if ARGV[2]
-      environment(name, options).create
+      OPTIONS.set(:version, ARGV[2]) if ARGV[2]
+      environment(name).create
     end
   
     def self.use
       name = ARGV[ARGV.index('use') + 1]
-      options[:global] = true
-      environment(name, options).use
+      OPTIONS.set(:global, true)
+      environment(name).use
     end
   
     def self.reload
@@ -144,6 +115,9 @@ module Mineshaft
 
     def self.version
       @logger.log "mineshaft v#{Mineshaft::Version.current}"
+    end
+
+    def self.help
     end
   end
 end

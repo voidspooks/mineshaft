@@ -25,12 +25,28 @@
 
 module Mineshaft
   class Options
+    attr_reader :options, :help
+
     def initialize
+      @options = {
+        openssl_dir: '/opt/homebrew/opt/openssl',
+        version: Mineshaft::RubyVersions.latest_stable,
+        global: false,
+        verbose: false
+      }
       @parser = parser
     end
 
     def parse!      
       @parser.parse!
+    end
+
+    def get(key)
+      @options[key]
+    end
+
+    def set(key, value)
+      @options[key] = value
     end
 
     private
@@ -55,15 +71,15 @@ module Mineshaft
         end
       
         opts.on('-o', '--with-openssl-dir DIR', 'specify the directory where OpenSSL is installed') do |openssl_dir|
-          COMMANDS.options[:openssl_dir] = openssl_dir
+          @options[:openssl_dir] = openssl_dir
         end
       
         opts.on('-n', '--no-openssl-dir',
                 'do not set the OpenSSL directory - otherwise this defaults to /usr/local/opt/openssl') do |_no_openssl|
-          COMMANDS.options[:no_openssl_dir] = true
+          @options[:no_openssl_dir] = true
         end
-      
-        COMMANDS.help = opts.help
+
+        @options[:help] = opts.help
       end
     end
   end

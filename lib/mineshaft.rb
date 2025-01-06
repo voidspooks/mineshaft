@@ -25,10 +25,10 @@
 
 require 'mineshaft/constants'
 require 'mineshaft/logger'
+require 'mineshaft/options'
 require 'mineshaft/date'
 require 'mineshaft/environment'
 require 'mineshaft/installer'
 require 'mineshaft/version'
 require 'mineshaft/ruby_versions'
 require 'mineshaft/commands'
-require 'mineshaft/options'
